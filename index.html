@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jan Horacio Rivera De la Puente | Portfolio</title>
-<meta name="description" content="Jan Rivera, Portfolio.">
+<meta name="description" content="Jan Rivera’s QA portfolio featuring test automation, web and mobile testing, API validation, and SQL.">
 
 <style>
   :root{
@@ -276,94 +276,68 @@
   color:var(--accent);
 }
 
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.9);
-    z-index:9999;
-    justify-content:center;
-    align-items:center;
+.modal {
+  inset: 0;
+  width: min(calc(100% - 24px), 1080px);
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 24px 80px #0009;
 }
-
-.modal.show{
-    display:flex;
+.modal::backdrop { background: #080b12dd; }
+body:has(.modal[open]) { overflow: hidden; }
+.modal-header, .modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px clamp(12px, 3vw, 24px);
 }
-
-.modal-content{
-    position:relative;
-    width:min(90vw,1000px);
-    background:#111;
-    border-radius:10px;
-    overflow:hidden;
+.modal-header { border-bottom: 1px solid var(--line); }
+#modalTitle { margin: 0; font-size: clamp(16px, 3vw, 22px); }
+.modal-stage {
+  display: grid;
+  place-items: center;
+  padding: clamp(8px, 2vw, 20px);
+  background: #0b1018;
 }
-
-.modal-content img{
-    width:100%;
-    max-height:75vh;
-    object-fit:contain;
-    background:black;
+#modalImage {
+  display: block;
+  max-width: 100%;
+  max-height: min(62dvh, 720px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
-
-.modal-prev,
-.modal-next{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:40px;
-    border:none;
-    background:none;
-    color:white;
-    cursor:pointer;
+#modalDescription {
+  margin: 0;
+  padding: 14px clamp(12px, 3vw, 24px);
+  overflow-wrap: anywhere;
 }
-
-.modal-prev{
-    left:10px;
+.modal-footer { border-top: 1px solid var(--line); }
+#modalPosition { color: var(--muted); font: 14px var(--mono); }
+.modal button {
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-2);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
 }
-
-.modal-next{
-    right:10px;
-}
-
-.modal-close{
-    position:absolute;
-    top:10px;
-    right:20px;
-    color:white;
-    font-size:40px;
-    cursor:pointer;
-}
-
-#modalDescription{
-    padding:20px;
-}
-
-.modal-close{
-  position:absolute;
-  top:10px;
-  right:20px;
-  font-size:40px;
-  cursor:pointer;
-}
-
-.modal-dots{
-    display:flex;
-    justify-content:center;
-    gap:8px;
-    padding:15px;
-}
-
-.modal-dots span{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:#555;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.modal-dots span.active{
-    background:var(--accent);
+.modal button:hover { border-color: var(--accent); }
+.modal button:focus-visible, .gallery-track img:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
 }
   
   /* ---------- contact ---------- */
@@ -414,14 +388,14 @@
     </div>
 
     <h1>Jan Horacio Rivera De la Puente</h1>
-    <div class="role">QA ENGINEER · QA AUTOMATION · PROJECT COORDINATOR</div>
+    <div class="role">QA ENGINEER · MANUAL TESTING &amp; AUTOMATION</div>
     <p class="lead">
-          Transform technical findings into quality and efficiency improvements, interested 
-          in projects focused on automation, data analysis, and process optimization with
-          a strong user‑experience perspective.
+      I test web and mobile applications and their APIs, automate critical user flows with Python and Selenium, and validate data with SQL.
     </p>
     <div class="btnrow">
-      <a class="btn primary" href="#projects">Projects</a>
+      <a class="btn primary" href="#projects">View all projects</a>
+      <a class="btn ghost" href="#nomad-pizza-automation">Nomad Pizza automation</a>
+      <a class="btn ghost" href="#urban-scooter-testing">Urban Scooter testing</a>
       <a class="btn ghost" href="https://www.linkedin.com/in/jan-horacio-rivera-de-la-puente/" target="_blank">LinkedIn</a>
       <a class="btn ghost" href="https://github.com/JanRDLP" target="_blank">GitHub</a>
     </div>
@@ -493,14 +467,80 @@
     <div class="eyebrow">projects/</div>
     <h2>Projects</h2>
 
-<article class="card card-split">
+    <article class="card card-split reverse">
       <div class="card-text">
         <div class="card-top">
-          <h3>Automation – Nomad Pizza Public Order Flow | 10/2026</h3>
+          <h3>AutoCAD · Piping Component Generation | 11/2026</h3>
+        </div>
+        <p class="desc">
+          The <code>CREARPIEZA</code> command generates 3D piping components in AutoCAD from user-selected specifications.
+        </p>
+        <p>
+          <img src="https://img.shields.io/badge/AutoCAD-E51050?logo=autodesk&amp;logoColor=white" alt="AutoCAD" height="35" loading="lazy">
+          <img src="https://img.shields.io/badge/AutoLISP-Scripting-blue?logo=lisp&amp;logoColor=white" alt="AutoLISP" height="35" loading="lazy">
+        </p>
+        <ul class="metrics">
+          <li><strong>Configure.</strong> Select the part type, material, schedule, angle, radius, and nominal size. This example uses a 2-inch, Schedule 40, long-radius 90° elbow for weldable black pipe.</li>
+          <li><strong>Place.</strong> Review the generated label, block name, and destination layer. Pick the intersection of the elbow’s connection centerlines to insert it as a labeled solid inside a block.</li>
+          <li><strong>Repeat.</strong> Press Enter to insert another elbow with the same specifications, or exit the command.</li>
+        </ul>
+      </div>
+      <div class="card-img">
+        <div class="gallery">
+          <div class="gallery-track">
+            <img
+              src="assets/img/piping-generation-1.png"
+              alt="Launch CREARPIEZA in AutoCAD"
+              data-gallery="piping-generation"
+              data-description="Run CREARPIEZA from the AutoCAD command line."
+              >
+            <img
+              src="assets/img/piping-generation-2.png"
+              alt="Elbow configuration and label preview"
+              data-gallery="piping-generation"
+              data-description="Select the specifications and review the generated label, block name, and destination layer."
+              >
+            <img
+              src="assets/img/piping-generation-3.png"
+              alt="Insertion point prompt in AutoCAD"
+              data-gallery="piping-generation"
+              data-description="Pick the intersection of the elbow’s connection centerlines."
+              >
+            <img
+              src="assets/img/piping-generation-4.png"
+              alt="Inserted elbow with the repeat prompt"
+              data-gallery="piping-generation"
+              data-description="Press Enter to place another elbow with the same specifications, or exit."
+              >
+            <img
+              src="assets/img/piping-generation-5.png"
+              alt="Resulting 3D elbow solid"
+              data-gallery="piping-generation"
+              data-description="Review the resulting 3D solid in AutoCAD. This simplified model omits threads and bevels."
+              >
+          </div>
+          <button class="gallery-btn prev" onclick="slideGallery(this, -1)" aria-label="Previous screenshot">❮</button>
+          <button class="gallery-btn next" onclick="slideGallery(this, 1)" aria-label="Next screenshot">❯</button>
+          <div class="gallery-dots">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+
+<article class="card card-split" id="nomad-pizza-automation" style="scroll-margin-top: 5rem">
+      <div class="card-text">
+        <div class="card-top">
+          <h3>Nomad Pizza · Order Flow Automation | 10/2026</h3>
           <span class="status">PASS</span>
         </div>
         <p class="desc">
-          UI automation of the public ordering journey (menu, cart and order information) of the Nomad Pizza web app.
+          Built a Selenium and pytest suite to verify menu selections, pizza customization, cart totals, and order summaries.
         </p>
         <p>
              <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
@@ -509,9 +549,8 @@
              <img src="https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&amp;logoColor=black" height="35" loading="lazy">
         </p>
         <ul class="metrics">
-          <li>Page Object Model with parametrized test data, covering the NO-001–NO-023 test case catalog.</li>
-          <li>Validated menu, customizable pizza ingredient combinations and prices, cart totals, and order ticket details.</li>
-          <li>Tests run against the Firebase Hosting Emulator, with a safeguard that blocks order creation on any other URL.</li>
+          <li>Used Page Objects and parametrized tests to cover ingredient combinations and pricing rules in the NO-001–NO-023 test catalog.</li>
+          <li>Restricted scenarios that create test orders to the local Firebase Emulator.</li>
           <li>Documented 3 findings in Jira (NP-1 to NP-3) with public defect reports.</li>
         </ul>
         <div class="card-links">
@@ -591,7 +630,7 @@
             hardcoded extra-ingredient price and a CSV export that ignores active filters.</li>
         </ul>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/nomad-pizza/tree/main" target="_blank">GitHub →</a>
+          <a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation" target="_blank">Public order-flow tests →</a>
           <a href="https://drive.google.com/file/d/1QX4G09OtfYSDLiY9WLbwfD6BEffG75RC/view?usp=sharing" target="_blank">Documentation →</a>
         </div>
       </div>
@@ -650,11 +689,11 @@
 <article class="card card-split">
       <div class="card-text">
         <div class="card-top">
-          <h3>Automation – Saucedemo Flows | 08/2026</h3>
+          <h3>SauceDemo · Checkout Automation | 08/2026</h3>
           <span class="status">PASS</span>
         </div>
         <p class="desc">
-          Automate the end-to-end covering critical user flows.
+          Automated the shopping journey from login through checkout in SauceDemo.
         </p>
         <p>
              <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
@@ -662,11 +701,8 @@
              <img src="https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&amp;logoColor=white" height="35" loading="lazy">
         </p>
         <ul class="metrics">
-          <li>The framework is structured with the Page Object Model (POM) to ensure clean separation between test logic and 
-            UI interactions.</li>
-          <li>Successful and failed login attempts</li>
-          <li>Adding and removing products from the cart</li>
-          <li>Completing the checkout process</li>
+          <li>Organized browser interactions in Page Objects and used pytest fixtures to set up login, cart, and checkout tests.</li>
+          <li>Covered valid and locked-out users, product sorting, cart updates, and order completion.</li>
         </ul>
         <div class="card-links">
           <a href="https://github.com/JanRDLP/saucedemo-flows-automation" target="_blank">GitHub →</a>
@@ -719,14 +755,14 @@
       </div>
     </article>
 
-    <article class="card card-split reverse">
+    <article class="card card-split reverse" id="urban-scooter-testing" style="scroll-margin-top: 5rem">
       <div class="card-text">
         <div class="card-top">
-          <h3>Web, Mobile &amp; API Testing | 05/2026</h3>
+          <h3>Urban Scooter · Web, Mobile &amp; API Testing | 05/2026</h3>
           <span class="status">PASS</span>
         </div>
         <p class="desc">
-          Validate key Urban Scooter flows across web, mobile, and API.
+          Tested order placement, order status, and courier workflows across the web app, Android app, and API.
         </p>
         <p>
              <img src="https://img.shields.io/badge/Postman-FF6C37?logo=postman&amp;logoColor=white" height="35" loading="lazy">
@@ -735,11 +771,10 @@
         <ul class="metrics">
           <li>Executed 140 test cases covering courier creation, order management, and core user journeys 
                using Android Studio Emulator and Postman.</li>
-          <li>Reported 4 critical, 5 major, and 22 minor defects, including coverage for push notifications, 
-               offline scenarios, status transitions, and field validations.</li>
+          <li>Reported 31 defects in Jira. In courier mode, navigation to the “My Orders” tab failed (TS10-9).</li>
         </ul>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/web-mobile-api-testing" target="_blank">GitHub →</a>
+          <a href="https://github.com/JanRDLP/web-mobile-api-testing#-key-reports--findings" target="_blank">Test reports and findings →</a>
           <a href="https://docs.google.com/spreadsheets/d/1YYfAs6b0Kmf2l7xMoadeh8jQ6riV6D3P/edit?usp=drive_link&amp;ouid=114584372796764343614&amp;rtpof=true&amp;sd=true" target="_blank">Documentation →</a>
         </div>
       </div>
@@ -880,19 +915,18 @@
     <article class="card card-split reverse">
       <div class="card-text">
         <div class="card-top">
-          <h3>Database &amp; Logs Validation | 03/2026</h3>
+          <h3>Urban Routes · SQL and Log Validation | 03/2026</h3>
           <span class="status">PASS</span>
         </div>
         <p class="desc">
-          Validate database and log consistency in Urban Routes.
+          Used SQL and application logs to check fleet availability and the weather conditions that trigger fare changes.
         </p>
         <p>
              <img src="https://img.shields.io/badge/SQL-336791?logo=postgresql&amp;logoColor=white" height="35" loading="lazy">
         </p>
         <ul class="metrics">
           <li>Ran SQL queries to analyze vehicle count, company distribution, weather conditions, and trip aggregations.</li>
-          <li>Found fewer vehicles than planned, fragmented company fleets, and inconsistencies in trip data, supporting 
-               bug detection in cost calculation and demand coverage.</li>
+          <li>Found 5,529 registered vehicles against a target of 10,550 and identified weather intervals where the fare multiplier should be 2.</li>
         </ul>
         <div class="card-links">
           <a href="https://github.com/JanRDLP/database-logs-validation" target="_blank">GitHub →</a>
@@ -949,23 +983,18 @@
     <article class="card card-split">
       <div class="card-text">
         <div class="card-top">
-          <h3>AutoLISP Pipe Layout/Inventory Automation | 10/2025</h3>
+          <h3>AutoLISP · Tag Export and Layer Control | 10/2025</h3>
         </div>
         <p class="desc">
-          Set of custom routines developed for AutoCAD to streamline the design and documentation of piping systems. 
+          AutoCAD routines for exporting component labels and managing layer visibility in piping drawings.
         </p>
         <p>
              <img src="https://img.shields.io/badge/AutoCAD-E51050?logo=autodesk&amp;logoColor=white" height="35" loading="lazy">
              <img src="https://img.shields.io/badge/AutoLISP-Scripting-blue?logo=lisp&logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Visual%20Studio%20Code-Editor-blue?logo=visualstudiocode&logoColor=white" height="35" loading="lazy">
         </p>
         <ul class="metrics">
-          <li>Custom AutoLISP commands to draw pipes and accessories with precise measurements.</li>
-          <li>Automated routines to label each component directly in the layout.</li>
-          <li>Inventory generation: scripts that compile all labeled parts into a structured file for documentation and 
-            material tracking.</li>
-          <li>Enhanced productivity by reducing manual errors and speeding up the design process.</li>
-          <li>Demonstrates expertise in CAD automation, engineering workflows, and scripting.</li>
+          <li>ExportarEtiquetas writes component labels and their attributes to a CSV inventory for documentation and material tracking.</li>
+          <li>LayerControl manages layer visibility from one dialog. A layer stays visible only when all of its applicable groups are enabled.</li>
         </ul>
         <div class="card-links">
           <a href="https://github.com/JanRDLP/autolisp-routines" target="_blank">GitHub →</a>
@@ -975,21 +1004,14 @@
         <div class="gallery">
           <div class="gallery-track">
             <img 
-              src="https://github.com/JanRDLP/autolisp-routines/blob/main/images/dn/dn_inserted.png?raw=true" 
-              alt="DN Inserted"
-              data-gallery="lisp"
-              data-description="Result of the DN routine in AutoCAD, showing two concentric circles representing the pipe’s outer diameter (OD) 
-              and inner diameter (ID). The command automatically calculates dimensions based on the selected nominal diameter (DN)."
-              >
-            <img 
-              src="https://github.com/JanRDLP/autolisp-routines/blob/main/images/export_tags/export_tags_document_example.png?raw=true/" 
+              src="https://github.com/JanRDLP/autolisp-routines/blob/main/images/export_tags/export_tags_document_example.png?raw=true"
               alt="CSV Exported"
               data-gallery="lisp"
               data-description="Output of the ExportarEtiquetas routine, exporting all component labels into a structured CSV/Excel file. The table
               includes layer, piece type, pipe type, size, flange type, length, and final label, creating a complete inventory of piping elements."
               >
             <img 
-              src="https://github.com/JanRDLP/autolisp-routines/blob/main/images/layer_control/layer_control_current.png?raw=true/" 
+              src="https://github.com/JanRDLP/autolisp-routines/blob/main/images/layer_control/layer_control_current.png?raw=true"
               alt="Layer Control Screen"
               data-gallery="lisp"
               data-description="LayerControl routine dialog in AutoCAD, providing a single panel to toggle visibility of grouped layers (Phase 1, 
@@ -1001,7 +1023,6 @@
           <button class="gallery-btn next" onclick="slideGallery(this, 1)">❯</button>
           <div class="gallery-dots">
             <span class="active"></span>
-            <span></span>
             <span></span>
           </div>
         </div>
@@ -1035,16 +1056,21 @@
   © 2026 Jan Rivera. Hosted on GitHub Pages.
 </footer>
 
-  <div id="imageModal" class="modal">
-      <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <button class="modal-prev">&#10094;</button>
-          <img id="modalImage" alt="">
-          <button class="modal-next">&#10095;</button>
-          <div id="modalDescription"></div>
-          <div class="modal-dots"></div>
-      </div>
-  </div>
+  <dialog id="imageModal" class="modal" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+    <div class="modal-header">
+      <h2 id="modalTitle">Screenshot</h2>
+      <button type="button" class="modal-close" aria-label="Close image viewer" autofocus>&times;</button>
+    </div>
+    <div class="modal-stage">
+      <img id="modalImage" alt="">
+    </div>
+    <p id="modalDescription"></p>
+    <div class="modal-footer">
+      <button type="button" class="modal-prev" aria-label="Previous screenshot">&#10094;</button>
+      <span id="modalPosition" aria-live="polite"></span>
+      <button type="button" class="modal-next" aria-label="Next screenshot">&#10095;</button>
+    </div>
+  </dialog>
   
 <script>
 function slideGallery(btn, dir){
@@ -1057,112 +1083,68 @@ function slideGallery(btn, dir){
   track.dataset.index = current;
   track.style.transform = `translateX(-${current * 100}%)`;
   dots.forEach((d,i) => d.classList.toggle('active', i === current));
+  Array.from(track.children).forEach((image, index) => {
+    image.tabIndex = index === current ? 0 : -1;
+  });
 }
 document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("imageModal");
+  const image = document.getElementById("modalImage");
+  const title = document.getElementById("modalTitle");
+  const description = document.getElementById("modalDescription");
+  const position = document.getElementById("modalPosition");
+  const previous = modal.querySelector(".modal-prev");
+  const next = modal.querySelector(".modal-next");
 
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById("modalImage");
-    const modalDesc = document.getElementById("modalDescription");
+  let gallery = [];
+  let index = 0;
 
-    const btnPrev = modal.querySelector(".modal-prev");
-    const btnNext = modal.querySelector(".modal-next");
-    const btnClose = modal.querySelector(".modal-close");
+  function showImage() {
+    const screenshot = gallery[index];
+    image.src = screenshot.src;
+    image.alt = screenshot.alt;
+    title.textContent = screenshot.alt || "Screenshot";
+    description.textContent = screenshot.dataset.description || "";
+    description.hidden = !description.textContent;
+    position.textContent = `${index + 1} / ${gallery.length}`;
+  }
 
-    let currentGallery = [];
-    let currentIndex = 0;
+  function move(direction) {
+    index = (index + direction + gallery.length) % gallery.length;
+    showImage();
+  }
 
-    const modalDots = document.querySelector(".modal-dots");
-      
-    function renderDots() {
-    modalDots.innerHTML = "";
-    currentGallery.forEach((_, index) => {
-        const dot = document.createElement("span");
-        if(index === currentIndex){
-            dot.classList.add("active");
-        }
-        dot.addEventListener("click", () => {
-            currentIndex = index;
-            showImage();
-            renderDots();
-        });
-        modalDots.appendChild(dot);
+  document.querySelectorAll(".gallery-track img[data-gallery]").forEach(screenshot => {
+    screenshot.tabIndex = screenshot === screenshot.parentElement.firstElementChild ? 0 : -1;
+    screenshot.setAttribute("role", "button");
+    screenshot.setAttribute("aria-haspopup", "dialog");
+    function open() {
+      gallery = Array.from(screenshot.closest(".gallery-track").querySelectorAll("img[data-gallery]"));
+      index = gallery.indexOf(screenshot);
+      showImage();
+      screenshot.focus({ preventScroll: true });
+      modal.showModal();
+      modal.scrollTop = 0;
+    }
+    screenshot.addEventListener("click", open);
+    screenshot.addEventListener("keydown", event => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      open();
     });
-    }
+  });
 
-    function showImage() {
-        if (!currentGallery.length) return;
-        const img = currentGallery[currentIndex];
-        modalImg.src = img.src;
-        modalImg.alt = img.alt || "";
-        modalDesc.textContent =
-            img.dataset.description ||
-            img.alt ||
-            "";
-        renderDots();
-    }
-
-    function openModal(clickedImage) {
-        const galleryName = clickedImage.dataset.gallery;
-        currentGallery = Array.from(
-            document.querySelectorAll(
-                `img[data-gallery="${galleryName}"]`
-            )
-        );
-        currentIndex =
-            currentGallery.indexOf(clickedImage);
-        showImage();
-        modal.classList.add("show");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-        modal.classList.remove("show");
-        document.body.style.overflow = "";
-    }
-
-    function nextImage() {
-        currentIndex =
-            (currentIndex + 1) %
-            currentGallery.length;
-        showImage();
-    }
-
-    function prevImage() {
-        currentIndex =
-            (currentIndex - 1 + currentGallery.length) %
-            currentGallery.length;
-        showImage();
-    }
-
-    document.querySelectorAll("img[data-gallery]")
-        .forEach(img => {
-            img.addEventListener("click", () => {
-                openModal(img);
-            });
-        });
-
-    btnNext.addEventListener("click", nextImage);
-    btnPrev.addEventListener("click", prevImage);
-    btnClose.addEventListener("click", closeModal);
-    modal.addEventListener("click", e => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-
-    document.addEventListener("keydown", e => {
-        if (!modal.classList.contains("show")) return;
-        if (e.key === "Escape") {
-            closeModal();
-        }
-        if (e.key === "ArrowRight") {
-            nextImage();
-        }
-        if (e.key === "ArrowLeft") {
-            prevImage();
-        }
-    });
-    
+  previous.addEventListener("click", () => move(-1));
+  next.addEventListener("click", () => move(1));
+  modal.querySelector(".modal-close").addEventListener("click", () => modal.close());
+  modal.addEventListener("click", event => {
+    if (event.target === modal) modal.close();
+  });
+  modal.addEventListener("keydown", event => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    move(event.key === "ArrowLeft" ? -1 : 1);
+  });
 });
 </script>
 
