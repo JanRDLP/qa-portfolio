@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jan Horacio Rivera De la Puente | Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg?v=2">
 <meta name="description" content="Jan Rivera’s QA portfolio featuring test automation, web and mobile testing, API validation, and SQL.">
 
 <style>
@@ -67,7 +68,8 @@
     display:flex; align-items:center; justify-content:space-between;
     padding: 16px 24px;
   }
-  .brand{ font-family: var(--mono); font-weight:600; font-size:15px; }
+  .brand{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-weight:600; font-size:15px;}
+  .brand img{display:block; width:25px; height:25px;}
   .brand span{ color: var(--pass); }
   .navlinks{ display:flex; gap: 28px; list-style:none; margin:0; padding:0; }
   .navlinks a{
@@ -77,43 +79,196 @@
   }
   .navlinks a:hover{ color: var(--text); }
 
-  .hero{ padding-top: 110px; padding-bottom: 80px; border-bottom: 1px solid var(--line); }
-  .terminal{
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 40px;
+  .hero{
+    padding:clamp(56px, 7vw, 100px) 0 clamp(48px, 6vw, 80px);
+    background: radial-gradient(ellipse at 83% 25%, #26392d 0%, transparent 56%);
   }
-  .terminal .bar{
-    display:flex; gap:6px;
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--line);
-    background: var(--panel-2);
-  }
-  .terminal .dot{ width:10px; height:10px; border-radius:50%; background:#3a4356; }
-  .terminal pre{
-    margin:0; padding: 22px 20px;
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--muted);
-    white-space: pre-wrap;
-  }
-  .terminal .ok{ color: var(--pass); }
-  .terminal .path{ color: var(--accent); }
-
-  .hero h1{
-    font-size: clamp(32px, 5vw, 52px);
-    margin-bottom: 14px;
+  .hero-grid{
+    max-width:1120px;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:clamp(24px, 4vw, 52px);
+    align-items:start;
   }
   .hero .role{
-    font-family: var(--mono);
-    color: var(--muted);
-    font-size: 15px;
-    margin-bottom: 22px;
+    color:var(--pass);
+    font: 600 .8rem var(--mono);
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    margin:0 0 18px;
   }
-  .hero p.lead{
-    max-width: 640px; color: var(--muted); font-size: 17px; margin-bottom: 32px;
+  .hero h1{
+    font-size:clamp(2rem, 4.4vw, 3.5rem);
+    line-height:1.04;
+    letter-spacing:-.055em;
+  }
+  .hero h1 span{display:block;}
+  .hero .lead{
+    color:var(--muted);
+    max-width:44ch;
+    margin:24px 0 30px;
+    font-size:clamp(1rem, 1.6vw, 1.15rem);
+  }
+  .featured-project{
+    display:block;
+    color:var(--text);
+    text-decoration:none;
+    overflow:hidden;
+    padding:clamp(12px, 2vw, 18px);
+    border:1px solid #45554d;
+    border-radius:22px;
+    background:linear-gradient(155deg, #1e2a25, var(--panel) 65%);
+    box-shadow:0 24px 60px #0005;
+    transition:transform .24s ease, border-color .24s ease;
+  }
+  .featured-projects{min-width:0; padding-inline:22px;}
+  .featured-viewport{position:relative;}
+  .featured-slides{display:grid; grid-template-columns:minmax(0, 1fr);}
+  .featured-slides .featured-project{grid-area:1 / 1;}
+  .featured-slides .featured-project[hidden]{display:block; visibility:hidden;}
+  .featured-nav{
+    position:absolute;
+    top:50%;
+    z-index:1;
+    transform:translateY(-50%);
+    display:grid;
+    place-items:center;
+    width:44px;
+    height:44px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:var(--panel);
+    color:var(--text);
+    font:inherit;
+    cursor:pointer;
+  }
+  .featured-nav[hidden]{display:none;}
+  .featured-prev{left:-22px;}
+  .featured-next{right:-22px;}
+  .featured-nav:hover{border-color:var(--accent);}
+  .featured-dots{
+    display:flex;
+    justify-content:center;
+    margin-top:4px;
+  }
+  .featured-dots button{
+    display:grid;
+    place-items:center;
+    flex:0 1 25px;
+    min-width:0;
+    height:44px;
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+  }
+  .featured-dots button::after{
+    content:"";
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background:var(--muted);
+  }
+  .featured-dots button:hover::after{background:var(--accent);}
+  .featured-dots button[aria-current="true"]::after{width:14px; background:var(--pass);}
+  .featured-project:hover{ transform:translateY(-4px); border-color:var(--pass); }
+  .featured-kicker{display:block; color:var(--pass); font:.75rem var(--mono);}
+  .featured-title{
+    display:block;
+    font-size:clamp(1rem, 2vw, 1.35rem);
+    line-height:1.6rem;
+    margin:4px 0 8px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  }
+  .featured-project img{
+    width:100%;
+    aspect-ratio:2 / 1;
+    display:block;
+    object-fit:contain;
+    border-radius:8px;
+    background:transparent;
+  }
+  .featured-copy{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:6px 14px;
+    padding-top:8px;
+    font-size:.85rem;
+  }
+  .featured-copy small{color:var(--muted); font-size:inherit;}
+  .featured-arrow{color:var(--pass);}
+  .project-filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:-10px 0 24px;
+  }
+
+  .project-filters[hidden], .card[hidden]{display:none;}
+  .project-filter{
+    padding:8px 14px;
+    min-height:44px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:var(--panel);
+    color:var(--text);
+    font:inherit;
+    cursor:pointer;
+  }
+  .project-filter:hover{border-color:var(--pass);}
+  .project-filter[aria-pressed="true"]{background:var(--pass); color:#0b1310; border-color:var(--pass);}
+  .project-results{color:var(--muted); font: .82rem var(--mono); margin:0 0 16px;}
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    grid-auto-rows:1fr;
+    gap:clamp(14px, 2.4vw, 24px);
+    align-items:stretch;
+  }
+  #projects .card{
+    --card-accent:var(--pass);
+    border-radius:16px;
+    padding:0;
+    margin:0;
+    background:var(--panel);
+    cursor:pointer;
+  }
+  #projects [data-category="development"]{--card-accent:#c4b5fd;}
+  #projects [data-category="functional"]{--card-accent:#7dd3fc;}
+  #projects [data-category="data"]{--card-accent:#fcd38b;}
+  #projects [data-category="cad"]{--card-accent:#a5b4fc;}
+  #projects .card:hover, #projects .card:focus-within{
+    border-color:var(--card-accent);
+    box-shadow:0 8px 24px #080b123d;
+  }
+  #projects .card-top h3{font-size:clamp(1.05rem, 2.2vw, 1.3rem); text-wrap:balance;}
+  .project-title{
+    padding:0;
+    border:0;
+    background:none;
+    color:inherit;
+    font:inherit;
+    text-align:left;
+    cursor:pointer;
+  }
+  .card:hover .project-title, .project-title:focus-visible{color:var(--card-accent);}
+  .project-title:hover{text-decoration:underline; text-underline-offset:.17em;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:4px;}
+  @media (max-width:760px){
+
+    .project-grid{grid-template-columns:minmax(0, 1fr);}
+    .hero-grid{grid-template-columns:1fr;}
+    .featured-projects{max-width:564px;}
+    nav.wrap{flex-wrap:wrap; gap:8px 20px;}
+    .navlinks{flex-wrap:wrap; gap:6px 16px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .featured-project, .gallery .gallery-track{transition:none;}
   }
   .btnrow{ display:flex; gap:14px; flex-wrap:wrap; }
   .btn{
@@ -132,17 +287,37 @@
   .about-grid{ display:grid; grid-template-columns: 1.3fr .7fr; gap: 48px; }
   .about-grid p{ color: var(--muted); margin-bottom: 16px; }
   .about-grid strong{ color: var(--text); }
-  .checklist{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .checklist{list-style:none; margin:0; padding:0; display:grid; gap:9px; align-content:start;}
   .checklist li{
-    font-family: var(--mono); font-size: 14px;
-    background: var(--panel); border:1px solid var(--line);
-    padding: 12px 14px; border-radius: 7px;
+    display:grid;
+    grid-template-columns:auto minmax(0, 1fr);
+    gap:8px;
+    padding:10px 13px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--panel);
+    font-size:.88rem;
   }
-  .checklist li::before{ content:"✓ "; color: var(--pass); }
+  .checklist li::before{content:"✓"; color:var(--pass); font-family:var(--mono);}
 
   @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
 
   .badges{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  @media (hover:hover){
+    img[src^="https://img.shields.io/badge/"]{
+      transition:filter .18s ease, transform .18s ease;
+    }
+    img[src^="https://img.shields.io/badge/"]:hover{
+      filter:brightness(1.22);
+      transform:scale(1.06);
+    }
+  }
+  @media (prefers-reduced-motion:reduce){
+    img[src^="https://img.shields.io/badge/"]{transition:none;}
+    img[src^="https://img.shields.io/badge/"]:hover{
+      transform:none;
+    }
+  }
 
   /* ---------- projects ---------- */
   .card{
@@ -153,87 +328,171 @@
     margin-bottom: 24px;
   }
   .card-top{
-    display:flex; align-items:center; justify-content:space-between;
-    flex-wrap: wrap; gap: 10px;
-    margin-bottom: 14px;
+    display:grid;
+    gap:12px;
+    margin-bottom:14px;
   }
-  .card-top h3{ font-size: 19px; }
-  .status{
-    font-family: var(--mono); font-size: 12px;
-    padding: 4px 10px; border-radius: 5px;
-    background: rgba(74,222,128,.12); color: var(--pass);
-    border: 1px solid rgba(74,222,128,.3);
+  .project-meta{
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:4px 12px;
+    justify-content:space-between;
+    color:var(--card-accent);
+    font:600 .7rem/1.35 var(--mono);
   }
-  .card p.desc{ color: var(--muted); margin-bottom: 16px; }
+  .project-meta span{
+    padding:3px 7px;
+    border-radius:5px;
+    background:color-mix(in srgb, var(--card-accent) 12%, transparent);
+  }
+  .project-meta time{
+    color:var(--muted);
+    font-weight:400;
+  }
+  .card p.desc{
+    color:var(--muted);
+    margin:0;
+    font-size:.88rem;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .card-tools{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:5px;
+    margin:0;
+    cursor:default;
+  }
+  .card-tools img{height:19px; max-width:100%;}
+  .project-highlight{
+    margin:0;
+    padding:6px 9px;
+    border-left:2px solid var(--card-accent);
+    border-radius:0 6px 6px 0;
+    background:color-mix(in srgb, var(--card-accent) 6%, transparent);
+    font-size:.825rem;
+  }
+  .project-highlight span{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+  .modal-project-details{margin:0 0 16px; padding:0 0 12px; border-bottom:1px solid var(--line);}
+  .modal-project-details .metrics{margin:8px 0 0;}
   .metrics{ list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:8px; }
   .metrics li{ font-size: 14px; color: var(--text); padding-left: 20px; position:relative; }
   .metrics li::before{
-    content:"▸"; color: var(--accent); position:absolute; left:0;
+    content:"";
+    position:absolute;
+    left:1px;
+    top:.67em;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:var(--accent);
   }
   .card-links{ display:flex; gap:16px; flex-wrap:wrap; }
   .card-links a{
-    font-family: var(--mono); font-size: 13px; color: var(--accent);
-    text-decoration:none; border-bottom: 1px solid transparent;
+    display:inline-flex;
+    align-items:center;
+    min-height:44px;
+    padding:7px 12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:#141b24;
+    color:var(--accent);
+    font:500 .8rem/1.4 var(--sans);
+    text-decoration:none;
   }
   .card-links a:hover{ border-color: var(--accent); }
 
-  /* ---------- projects: split layout (texto + imagen), estilo Diego Ruiz ---------- */
+  /* ---------- project card content ---------- */
   .card-split{
     display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    align-items: center;
+    grid-template-columns:minmax(0, 1fr);
+    grid-template-rows:auto 1fr;
   }
-  .card-split .card-text{ min-width:0; }
+  .card-split .card-text{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width:0;
+    padding:12px clamp(12px, 2vw, 18px) 14px;
+  }
+  .card-split .card-top{gap:6px; margin:0;}
+  .card-split .card-links{margin-top:auto;}
+  .card-split .card-links{gap:6px;}
+  .card-split .card-links a{padding-inline:9px;}
+  .card-split .card-links a:first-child{
+    color:var(--card-accent);
+    background:color-mix(in srgb, var(--card-accent) 9%, var(--panel));
+  }
+  .card-split .card-img{
+    min-width:0;
+    padding:9px 12px 0;
+    border-bottom:1px solid var(--line);
+    border-radius:15px 15px 0 0;
+    background:radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--card-accent) 9%, var(--panel)), var(--panel) 85%);
+  }
   .card-split .card-img img{
-    width:100%;
-    border-radius: 8px;
+    max-width:100%;
+    border-radius: 12px;
     border: 1px solid var(--line);
     display:block;
   }
-  .card-split.reverse .card-img{ order:-1; }
 
   /* ---------- gallery / slider dentro de .card-img ---------- */
   .gallery{
     position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 1px solid var(--line);
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:3px;
   }
   .gallery-track{
-    display:flex;
-    transition: transform .35s ease;
+    grid-column:1 / -1;
+    display:grid;
+    place-items:center;
+    height:clamp(142px, 21vw, 190px);
+    min-width:0;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   }
   .gallery-track img{
-    width:100%;
-    height:300px;
-    flex:0 0 100%;
-
-    object-fit:contain; /* mantiene proporciones */
-    background:#000;    /* relleno negro */
-    display:block;
-
-    border:none;
-    cursor:pointer;
-}
+    width:auto;
+    height:auto;
+    max-height:100%;
+    object-fit:contain;
+    cursor:zoom-in;
+  }
+  .gallery-track img[hidden],
+  .gallery-track:not([data-index]) img:not(:first-child){display:none;}
+  .gallery-track img.is-portrait{
+    border-radius:12px;
+    border-color:#536177;
+    box-shadow:0 5px 14px #080b1240;
+  }
   .gallery-btn{
-    position:absolute; top:50%; transform:translateY(-50%);
+    grid-row:2;
     background: rgba(16,20,27,.75);
     border: 1px solid var(--line);
     color: var(--text);
-    width:34px; height:34px;
-    border-radius:50%;
+    width:44px; height:36px;
+    border-radius:7px;
     cursor:pointer;
     font-family: var(--mono);
     font-size:16px;
     display:flex; align-items:center; justify-content:center;
   }
-  .gallery-btn.prev{ left:10px; }
-  .gallery-btn.next{ right:10px; }
+  .gallery-btn.prev{grid-column:1;}
+  .gallery-btn.next{grid-column:3;}
   .gallery-btn:hover{ border-color: var(--accent); }
   .gallery-dots{
-    position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
-    display:flex; gap:6px;
+    grid-area:2 / 2;
+    display:flex; justify-content:center; gap:6px;
   }
   .gallery-dots span{
     width:6px; height:6px; border-radius:50%;
@@ -241,10 +500,6 @@
   }
   .gallery-dots span.active{ background: var(--accent); }
 
-  @media (max-width: 760px){
-    .card-split{ grid-template-columns: 1fr; }
-    .card-split.reverse .card-img{ order:0; }
-  }
 
   .gallery-item{
     flex:0 0 100%;
@@ -277,67 +532,194 @@
 }
 
 .modal {
-  inset: 0;
-  width: min(calc(100% - 24px), 1080px);
-  max-width: none;
-  max-height: calc(100dvh - 24px);
-  margin: auto;
-  padding: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
-  color: var(--text);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: 0 24px 80px #0009;
+  inset:0;
+  width:min(calc(100% - 24px), 1200px);
+  height:calc(100dvh - 24px);
+  max-width:none;
+  margin:auto;
+  padding:0;
+  overflow:auto;
+  overscroll-behavior:contain;
+  color:var(--text);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 24px 80px #0009;
 }
-.modal::backdrop { background: #080b12dd; }
-body:has(.modal[open]) { overflow: hidden; }
-.modal-header, .modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px clamp(12px, 3vw, 24px);
+.modal[open]{
+  display:grid;
+  grid-template:"header header" 60px "readme evidence" minmax(0, 1fr) / minmax(0, .78fr) minmax(0, 1.22fr);
 }
-.modal-header { border-bottom: 1px solid var(--line); }
-#modalTitle { margin: 0; font-size: clamp(16px, 3vw, 22px); }
-.modal-stage {
-  display: grid;
-  place-items: center;
-  padding: clamp(8px, 2vw, 20px);
-  background: #0b1018;
+.modal::backdrop{background:#080b12df; backdrop-filter:blur(6px);}
+body:has(.modal[open]){overflow:hidden;}
+.modal-header{
+  grid-area:header;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px clamp(12px, 2.4vw, 24px);
+  background:var(--panel);
+  border-bottom:1px solid var(--line);
 }
-#modalImage {
-  display: block;
-  max-width: 100%;
-  max-height: min(62dvh, 720px);
-  width: auto;
-  height: auto;
-  object-fit: contain;
+#modalProject{
+  min-width:0;
+  margin:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:clamp(1rem, 2.4vw, 1.32rem);
 }
-#modalDescription {
-  margin: 0;
-  padding: 14px clamp(12px, 3vw, 24px);
-  overflow-wrap: anywhere;
+.modal-readme{
+  grid-area:readme;
+  min-height:0;
+  padding:0;
+  display:grid;
+  grid-template-rows:auto minmax(0, 1fr);
+  border-right:1px solid var(--line);
+  background:#131922;
 }
-.modal-footer { border-top: 1px solid var(--line); }
-#modalPosition { color: var(--muted); font: 14px var(--mono); }
-.modal button {
-  flex: none;
-  min-width: 44px;
-  min-height: 44px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel-2);
-  color: var(--text);
-  font: inherit;
-  cursor: pointer;
+.modal-readme h3{
+  margin:0;
+  padding:17px clamp(14px, 2.5vw, 28px) 12px;
+  color:var(--pass);
+  font:600 .8rem var(--mono);
 }
-.modal button:hover { border-color: var(--accent); }
-.modal button:focus-visible, .gallery-track img:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: -3px;
+.modal-readme-body{
+  overflow:auto;
+  padding:0 clamp(14px, 2.5vw, 28px) 20px;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  overflow-wrap:anywhere;
+  font-size:.9rem;
+  line-height:1.65;
+  color:var(--muted);
+}
+.modal-readme-body h4{margin:18px 0 6px; color:var(--text); font-size:1rem;}
+.modal-readme-body h4:first-child{margin-top:4px;}
+.modal-readme-body p{margin:8px 0;}
+  .modal-readme-body ul:not(.metrics), .modal-readme-body ol{padding-left:22px;}
+.modal-readme-body a{color:var(--accent); text-underline-offset:3px;}
+.modal-readme-body code{color:var(--text); font-size:.9em;}
+.modal-readme-body pre{
+  overflow:auto;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel-2);
+}
+.modal-readme-body table{width:100%; border-collapse:collapse;}
+.modal-readme-body th, .modal-readme-body td{padding:7px; border:1px solid var(--line); text-align:left;}
+.modal-evidence{
+  grid-area:evidence;
+  display:grid;
+  grid-template-rows:minmax(0, 1fr) 68px;
+  gap:10px;
+  min-width:0;
+  min-height:0;
+  padding:clamp(10px, 2vw, 20px);
+}
+.modal-figure{
+  display:grid;
+  grid-template-rows:minmax(96px, 1fr) auto;
+  margin:0;
+  min-height:0;
+}
+.modal-stage{
+  display:grid;
+  place-items:center;
+  grid-template:minmax(0, 1fr) / minmax(0, 1fr);
+  border:1px solid var(--line);
+  border-radius:12px 12px 0 0;
+  padding:clamp(6px, 1.6vw, 16px);
+  background:
+    radial-gradient(ellipse at 50% 45%, #7dd3fc12, transparent 66%),
+    radial-gradient(circle, #8b96a826 1px, transparent 1.2px) center / 20px 20px,
+    var(--panel);
+}
+#modalImage{
+  display:block;
+  max-width:100%;
+  max-height:100%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:6px;
+  box-shadow:0 8px 24px #080b124d;
+}
+.modal-stage:has(#modalImage.is-portrait){padding-block:6px;}
+#modalImage.is-portrait{
+  height:100%;
+  border-radius:12px;
+  outline:1px solid #536177;
+  outline-offset:-1px;
+}
+.modal-caption{
+  padding:8px 14px 10px;
+  overflow-wrap:anywhere;
+  border:1px solid var(--line);
+  border-top:0;
+  border-radius:0 0 12px 12px;
+  background:var(--panel-2);
+}
+#modalTitle{margin:0; font-size:clamp(.95rem, 1.8vw, 1.12rem);}
+#modalDescription{margin:4px 0 0; color:var(--muted); font-size:.86rem; line-height:1.5;}
+.modal-footer{
+  display:grid;
+  grid-template-columns:auto minmax(0, 1fr) auto auto;
+  align-items:center;
+  gap:8px;
+}
+#modalPosition{grid-column:3; color:var(--muted); font:.75rem var(--mono); white-space:nowrap; text-align:center;}
+.modal-prev{grid-column:1; grid-row:1;}
+.modal-next{grid-column:4; grid-row:1;}
+.modal-thumbnails{
+  grid-column:2;
+  grid-row:1;
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  padding:3px;
+  scrollbar-width:thin;
+}
+.modal button{
+  flex:none;
+  min-width:44px;
+  min-height:44px;
+  padding:0 8px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel-2);
+  color:var(--text);
+  font:inherit;
+  cursor:pointer;
+}
+.modal button:hover{border-color:var(--accent);}
+.modal button.modal-thumbnail{padding:3px; width:66px; height:50px; background:var(--panel);}
+.modal-thumbnail img{display:block; width:100%; height:100%; object-fit:contain; border-radius:4px;}
+.modal button.modal-thumbnail[aria-current="true"]{
+  border-color:var(--pass);
+  box-shadow:0 0 0 1px var(--pass);
+}
+.modal button:focus-visible, .gallery-track img:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:-3px;
+}
+@media (max-height:560px){
+  .modal[open]{grid-template-rows:56px minmax(0, 1fr);}
+  .modal-evidence{grid-template-rows:minmax(0, 1fr) 56px; gap:6px;}
+  .modal button.modal-thumbnail{height:44px;}
+}
+@media (max-width:720px){
+  .modal[open]{
+    grid-template:"header" 58px "evidence" minmax(clamp(290px, 62dvh, 470px), max-content) "readme" auto / minmax(0, 1fr);
+  }
+  .modal-header{position:sticky; top:0; z-index:1;}
+  .modal-evidence{grid-template-rows:minmax(0, 1fr) 56px;}
+  .modal-readme{grid-template-rows:auto auto; border-right:0; border-top:1px solid var(--line);}
+  .modal-readme-body{overflow:visible;}
+  .modal-footer{gap:5px;}
+  .modal button.modal-thumbnail{width:54px; height:44px;}
 }
   
   /* ---------- contact ---------- */
@@ -361,7 +743,10 @@ body:has(.modal[open]) { overflow: hidden; }
 
 <header>
   <nav class="wrap">
-    <div class="brand">jan_rivera<span>.qa</span></div>
+    <div class="brand">
+      <img src="assets/img/favicon.svg?v=2" alt="" width="25" height="25">
+      <div>jan_rivera<span>.qa</span></div>
+    </div>
     <ul class="navlinks">
       <li><a href="#about">About me</a></li>
       <li><a href="#stack">Stack</a></li>
@@ -372,35 +757,103 @@ body:has(.modal[open]) { overflow: hidden; }
 </header>
 
 <section class="hero">
-  <div class="wrap">
-    <div class="terminal">
-      <div class="bar">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="role">QA Engineer · Manual Testing &amp; Automation</p>
+      <h1><span>Jan Horacio</span> <span>Rivera De la Puente</span></h1>
+      <p class="lead">
+        I test web apps, mobile apps, and APIs. I automate critical user flows with Python and Selenium and validate data with SQL.
+      </p>
+      <div class="btnrow">
+        <a class="btn primary" href="#projects">Explore projects ↓</a>
+        <a class="btn ghost" href="https://drive.google.com/file/d/1vZsEs4Io4aI7d1CLdMEYsb44bNCV-Ab-/view?usp=sharing" target="_blank" rel="noopener">View CV ↗</a>
       </div>
-      <pre>$ execute --suite portafolio.spec
-
-  <span class="path">testing/manual+api+mobile</span> .................. <span class="ok">PASS</span>
-  <span class="path">data/SQL+analysis</span> .......................... <span class="ok">PASS</span>
-  <span class="path">automation/selenium+python</span> ................. <span class="ok">PASS</span>
-  <span class="path">documentation/jira+cloud+loom</span> .............. <span class="ok">PASS</span>
-
-  4 passed, 0 failed — 100% ✓</pre>
     </div>
-
-    <h1>Jan Horacio Rivera De la Puente</h1>
-    <div class="role">QA ENGINEER · MANUAL TESTING &amp; AUTOMATION</div>
-    <p class="lead">
-      I test web and mobile applications and their APIs, automate critical user flows with Python and Selenium, and validate data with SQL.
-    </p>
-    <div class="btnrow">
-      <a class="btn primary" href="#projects">View all projects</a>
-      <a class="btn ghost" href="#nomad-pizza-automation">Nomad Pizza automation</a>
-      <a class="btn ghost" href="#urban-scooter-testing">Urban Scooter testing</a>
-      <a class="btn ghost" href="https://www.linkedin.com/in/jan-horacio-rivera-de-la-puente/" target="_blank">LinkedIn</a>
-      <a class="btn ghost" href="https://github.com/JanRDLP" target="_blank">GitHub</a>
+    <div class="featured-projects" role="region" aria-label="Featured projects">
+      <div class="featured-viewport">
+        <div class="featured-slides">
+          <a class="featured-project" href="#piping-component-generation" hidden>
+            <span class="featured-kicker">CAD AUTOMATION</span>
+            <strong class="featured-title">Piping Component Generation</strong>
+            <img src="assets/img/piping-generation-5.png" alt="Rendered 3D elbow generated in AutoCAD">
+            <span class="featured-copy">
+              <small>AutoCAD · AutoLISP</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <a class="featured-project" href="#nomad-pizza-automation">
+            <span class="featured-kicker">QA AUTOMATION</span>
+            <strong class="featured-title">Nomad Pizza · Order Flow</strong>
+            <img src="assets/img/test_menu.png" alt="Python test code and pytest results for the Nomad Pizza menu">
+            <span class="featured-copy">
+              <small>Python · Selenium · pytest</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <a class="featured-project" href="#nomad-pizza-pos" hidden>
+            <span class="featured-kicker">WEB DEVELOPMENT</span>
+            <strong class="featured-title">Nomad Pizza · POS &amp; E-Ticket</strong>
+            <img src="assets/img/np_loading.png" alt="Nomad Pizza menu loading screen">
+            <span class="featured-copy">
+              <small>JavaScript · Firebase</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <a class="featured-project" href="#saucedemo-automation" hidden>
+            <span class="featured-kicker">QA AUTOMATION</span>
+            <strong class="featured-title">SauceDemo · Checkout Automation</strong>
+            <img src="assets/img/checkout_test.png" alt="Automated checkout test in SauceDemo">
+            <span class="featured-copy">
+              <small>Python · Selenium · pytest</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <a class="featured-project" href="#urban-scooter-testing" hidden>
+            <span class="featured-kicker">WEB, MOBILE &amp; API TESTING</span>
+            <strong class="featured-title">Urban Scooter</strong>
+            <img src="assets/img/wma_api_courier.png" alt="Postman response for the Urban Scooter courier API">
+            <span class="featured-copy">
+              <small>Postman · Android Studio · Jira</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <a class="featured-project" href="#urban-routes-automation" hidden>
+            <span class="featured-kicker">QA AUTOMATION</span>
+            <strong class="featured-title">Urban Routes · Booking Automation</strong>
+            <img src="assets/img/e2e_test.png" alt="Automated Urban Routes booking test">
+            <span class="featured-copy">
+              <small>Python · Selenium · pytest</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <a class="featured-project" href="#urban-routes-data" hidden>
+            <span class="featured-kicker">DATA VALIDATION</span>
+            <strong class="featured-title">Urban Routes · SQL &amp; Logs</strong>
+            <img src="assets/img/dv_vehicles.png" alt="SQL results for the Urban Routes fleet check">
+            <span class="featured-copy">
+              <small>SQL · Application logs</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+          <a class="featured-project" href="#autolisp-tag-layer-control" hidden>
+            <span class="featured-kicker">CAD AUTOMATION</span>
+            <strong class="featured-title">AutoLISP · Tag Export &amp; Layer Control</strong>
+            <img src="https://github.com/JanRDLP/autolisp-routines/blob/main/images/export_tags/export_tags_document_example.png?raw=true" alt="Component inventory exported from AutoCAD">
+            <span class="featured-copy">
+              <small>AutoCAD · AutoLISP</small>
+              <span class="featured-arrow">View project <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+        </div>
+        <button type="button" class="featured-nav featured-prev" aria-label="Previous featured project" hidden>&#10094;</button>
+        <button type="button" class="featured-nav featured-next" aria-label="Next featured project" hidden>&#10095;</button>
+      </div>
+      <div class="featured-dots" role="group" aria-label="Choose a featured project"></div>
     </div>
   </div>
 </section>
+
+
 
 <section id="about">
   <div class="wrap">
@@ -409,30 +862,28 @@ body:has(.modal[open]) { overflow: hidden; }
     <div class="about-grid">
       <div>
         <p>
-          I have executed over 380 tests across <strong>Manual</strong>, <strong>API</strong>, 
-          <strong>Automation</strong>, and <strong>Mobile</strong> environments, reporting more than 100 
-          defects in <strong>Jira</strong>. My experience includes designing flowcharts, test cases, 
-          equivalence classes, and checklists, as well as conducting requirement analysis to ensure 
-          system functionality, data architecture consistency, and user value delivery. I apply tools such 
-          as <strong>Python</strong>, <strong>Selenium</strong>, <strong>Pytest</strong> and 
-          <strong>SQL</strong> to validate data and automate critical flows.
-        </p>
-        <p> 
-          Beyond software testing, I have leveraged <strong>AI</strong> to generate <strong>AutoLISP</strong> 
-          routines in <strong>AutoCAD</strong>, optimizing and ensuring 100% accuracy in piping layouts 
-          and accessories. I also developed routines to automatically label each component and generate 
-          inventory files, reducing manual errors and improving traceability in industrial projects.
+          When I test an app, I like to follow an action beyond the screen where it starts. If I change an ingredient
+          on a pizza, does the price update in the cart? Does the same total make it to the order summary?
+          Questions like these help me decide what to test next.
         </p>
         <p>
-          I am passionate about learning and applying new technologies, exploring digital tools that 
-          enhance efficiency and innovation. My goal is to combine technical precision with analytical 
-          thinking to deliver reliable solutions and outstanding user experiences.
+          Building Nomad Pizza gave me a chance to test an application I had designed myself. I wrote automated checks
+          for the menu, cart, and order summary, and ran the scenarios that create orders in a local Firebase emulator.
+          On Urban Scooter, I used an Android emulator and Postman to look at the same delivery workflow from
+          the courier’s side and from the API.
+        </p>
+        <p>
+          My background in industrial engineering and process auditing shows up in what I do after I find a problem.
+          I record where the behavior first went off track, what I expected to happen, and the steps someone else
+          can follow to see it for themselves.
         </p>
       </div>
       <ul class="checklist">
-        <li>Industrial‑driven QA mindset</li>
-        <li>Innovative automation solutions</li>
-        <li>Continuous improvement mindset</li>
+        <li><span><strong>328</strong> documented checks</span></li>
+        <li><span><strong>86</strong> defect reports</span></li>
+        <li><span><strong>QA Engineering</strong> certification · TripleTen</span></li>
+        <li><span><strong>Lean Six Sigma</strong> Yellow Belt</span></li>
+        <li><span><strong>English</strong> · B2</span></li>
       </ul>
     </div>
   </div>
@@ -467,27 +918,17 @@ body:has(.modal[open]) { overflow: hidden; }
     <div class="eyebrow">projects/</div>
     <h2>Projects</h2>
 
-    <article class="card card-split reverse">
-      <div class="card-text">
-        <div class="card-top">
-          <h3>AutoCAD · Piping Component Generation | 11/2026</h3>
-        </div>
-        <p class="desc">
-          The <code>CREARPIEZA</code> command generates 3D piping components in AutoCAD from user-selected specifications.
-        </p>
-        <p>
-          <img src="https://img.shields.io/badge/AutoCAD-E51050?logo=autodesk&amp;logoColor=white" alt="AutoCAD" height="35" loading="lazy">
-          <img src="https://img.shields.io/badge/AutoLISP-Scripting-blue?logo=lisp&amp;logoColor=white" alt="AutoLISP" height="35" loading="lazy">
-        </p>
-        <ul class="metrics">
-          <li><strong>Configure.</strong> Select the part type, material, schedule, angle, radius, and nominal size. This example uses a 2-inch, Schedule 40, long-radius 90° elbow for weldable black pipe.</li>
-          <li><strong>Place.</strong> Review the generated label, block name, and destination layer. Pick the intersection of the elbow’s connection centerlines to insert it as a labeled solid inside a block.</li>
-          <li><strong>Repeat.</strong> Press Enter to insert another elbow with the same specifications, or exit the command.</li>
-        </ul>
-        <div class="card-links">
-          <a href="https://github.com/JanRDLP/autolisp-routines/tree/main/piping-component-generation" target="_blank" rel="noopener">View source and setup instructions →</a>
-        </div>
-      </div>
+    <div class="project-filters" role="group" aria-label="Filter projects" hidden>
+      <button class="project-filter" type="button" data-filter="all" aria-pressed="true">All projects</button>
+      <button class="project-filter" type="button" data-filter="automation" aria-pressed="false">Test automation</button>
+      <button class="project-filter" type="button" data-filter="functional" aria-pressed="false">Web, mobile &amp; API</button>
+      <button class="project-filter" type="button" data-filter="development" aria-pressed="false">Web development</button>
+      <button class="project-filter" type="button" data-filter="data" aria-pressed="false">Data validation</button>
+      <button class="project-filter" type="button" data-filter="cad" aria-pressed="false">CAD automation</button>
+    </div>
+    <p class="project-results" role="status" hidden></p>
+    <div class="project-grid">
+      <article class="card card-split" id="piping-component-generation" style="scroll-margin-top: 5rem" data-category="cad">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
@@ -533,33 +974,34 @@ body:has(.modal[open]) { overflow: hidden; }
           </div>
         </div>
       </div>
-    </article>
-
-
-<article class="card card-split" id="nomad-pizza-automation" style="scroll-margin-top: 5rem">
       <div class="card-text">
         <div class="card-top">
-          <h3>Nomad Pizza · Order Flow Automation | 10/2026</h3>
-          <span class="status">PASS</span>
+          <div class="project-meta">
+            <span>CAD Automation</span>
+            <time datetime="2026-11">11/2026</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">AutoCAD · Piping Component Generation</button></h3>
         </div>
         <p class="desc">
-          Built a Selenium and pytest suite to verify menu selections, pizza customization, cart totals, and order summaries.
+          Generate 3D piping components in AutoCAD with <code>CREARPIEZA</code>.
         </p>
-        <p>
-             <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Selenium-43B02A?logo=selenium&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&amp;logoColor=black" height="35" loading="lazy">
+        <p class="project-highlight"><span>Configure a 2-inch, Schedule 40, long-radius 90° elbow and review its label and layer.</span></p>
+        <p class="card-tools">
+          <img src="https://img.shields.io/badge/AutoCAD-E51050?logo=autodesk&amp;logoColor=white" alt="AutoCAD" height="35" loading="lazy">
+          <img src="https://img.shields.io/badge/AutoLISP-Scripting-blue?logo=lisp&amp;logoColor=white" alt="AutoLISP" height="35" loading="lazy">
         </p>
-        <ul class="metrics">
-          <li>Used Page Objects and parametrized tests to cover ingredient combinations and pricing rules in the NO-001–NO-023 test catalog.</li>
-          <li>Restricted scenarios that create test orders to the local Firebase Emulator.</li>
-          <li>Documented 3 findings in Jira (NP-1 to NP-3) with public defect reports.</li>
-        </ul>
+        <template class="project-details">
+          <ul class="metrics">
+            <li>Pick the connection centerline intersection to insert the solid. Press Enter to repeat.</li>
+          </ul>
+        </template>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation" target="_blank">GitHub →</a>
+          <a href="https://github.com/JanRDLP/autolisp-routines/tree/main/piping-component-generation" target="_blank" rel="noopener">View source and setup instructions →</a>
         </div>
       </div>
+      </article>
+
+      <article class="card card-split" id="nomad-pizza-automation" style="scroll-margin-top: 5rem" data-category="automation">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
@@ -606,40 +1048,46 @@ body:has(.modal[open]) { overflow: hidden; }
           </div>
         </div>
       </div>
-    </article>
-
-    <article class="card card-split reverse">
       <div class="card-text">
         <div class="card-top">
-          <h3>Web App – Nomad Pizza POS &amp; E-Ticket | 09/2026</h3>
+          <div class="project-meta">
+            <span>Test Automation</span>
+            <time datetime="2026-10">10/2026</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">Nomad Pizza · Order Flow Automation</button></h3>
         </div>
         <p class="desc">
-          Point-of-sale and electronic ticket web system built for a real pizza business, with a public ordering interface and a protected admin panel.
+          Automated menu, cart, and order checks with Selenium and pytest.
         </p>
-        <p>
-             <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&amp;logoColor=black" height="35" loading="lazy">
+        <p class="project-highlight"><span>Documented 3 findings in Jira (NP-1 to NP-3) with public defect reports.</span></p>
+        <p class="card-tools">
+             <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Selenium-43B02A?logo=selenium&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&amp;logoColor=white" height="35" loading="lazy">
              <img src="https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&amp;logoColor=black" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Vite-646CFF?logo=vite&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&amp;logoColor=white" height="35" loading="lazy">
         </p>
-        <ul class="metrics">
-          <li>Customers and staff build orders (dine-in / take-away) and follow the order status in real time
-            through a digital ticket.</li>
-          <li>Admin panel with login, live pending orders with sound alert, sales history with Excel-style 
-            filters and CSV export, and menu/ingredient management.</li>
-          <li>Business rules implemented: 2x$100 take-away promo, dynamic pricing for customizable pizzas, and 
-            unique daily order IDs (NO-YY-DDD-NNN) generated with Firestore transactions.</li>
-          <li>Wrote the requirements document (NOMAD-REQ-DOC-001) and flagged technical findings, such as a 
-            hardcoded extra-ingredient price and a CSV export that ignores active filters.</li>
-        </ul>
+        <template class="project-details">
+          <ul class="metrics">
+            <li>Used Page Objects and parametrized tests to cover ingredient combinations and pricing rules in the NO-001–NO-023 test catalog.</li>
+            <li>Restricted scenarios that create test orders to the local Firebase Emulator.</li>
+          </ul>
+        </template>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation" target="_blank">Public order-flow tests →</a>
-          <a href="https://drive.google.com/file/d/1QX4G09OtfYSDLiY9WLbwfD6BEffG75RC/view?usp=sharing" target="_blank">Documentation →</a>
+          <a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation" target="_blank">GitHub →</a>
         </div>
       </div>
+      </article>
+
+<article class="card card-split" id="nomad-pizza-pos" data-category="development">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
+            <img
+              src="assets/img/np_loading.png"
+              alt="Nomad Pizza menu loading screen"
+              data-gallery="nomadpizza"
+              data-description="The customer-facing app displays the Nomad Pizza logo, a spinner, and a status message while the menu loads."
+              >
             <img
               src="assets/img/np_menu.png"
               alt="Public menu"
@@ -683,34 +1131,43 @@ body:has(.modal[open]) { overflow: hidden; }
             <span></span>
             <span></span>
             <span></span>
+            <span></span>
           <span></span>
         </div>
       </div>
     </div>
-</article>
-    
-<article class="card card-split">
       <div class="card-text">
         <div class="card-top">
-          <h3>SauceDemo · Checkout Automation | 08/2026</h3>
-          <span class="status">PASS</span>
+          <div class="project-meta">
+            <span>Web Development</span>
+            <time datetime="2026-09">09/2026</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">Nomad Pizza · POS &amp; E-Ticket</button></h3>
         </div>
         <p class="desc">
-          Automated the shopping journey from login through checkout in SauceDemo.
+          Built a web POS with online ordering and digital tickets.
         </p>
-        <p>
-             <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Selenium-43B02A?logo=selenium&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&amp;logoColor=white" height="35" loading="lazy">
+        <p class="project-highlight"><span>Built live order tracking and an admin dashboard for menus, orders, and sales.</span></p>
+        <p class="card-tools">
+             <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&amp;logoColor=black" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&amp;logoColor=black" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Vite-646CFF?logo=vite&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&amp;logoColor=white" height="35" loading="lazy">
         </p>
-        <ul class="metrics">
-          <li>Organized browser interactions in Page Objects and used pytest fixtures to set up login, cart, and checkout tests.</li>
-          <li>Covered valid and locked-out users, product sorting, cart updates, and order completion.</li>
-        </ul>
+        <template class="project-details">
+          <ul class="metrics">
+            <li>Implemented promotions, custom pizza pricing, and unique order IDs with Firestore transactions.</li>
+            <li>Documented requirements and flagged pricing and CSV export issues.</li>
+          </ul>
+        </template>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/saucedemo-flows-automation" target="_blank">GitHub →</a>
+          <a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation" target="_blank">Public order-flow tests →</a>
+          <a href="https://drive.google.com/file/d/1QX4G09OtfYSDLiY9WLbwfD6BEffG75RC/view?usp=sharing" target="_blank">Documentation →</a>
         </div>
       </div>
+      </article>
+
+<article class="card card-split" id="saucedemo-automation" data-category="automation">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
@@ -756,31 +1213,35 @@ body:has(.modal[open]) { overflow: hidden; }
           </div>
         </div>
       </div>
-    </article>
-
-    <article class="card card-split reverse" id="urban-scooter-testing" style="scroll-margin-top: 5rem">
       <div class="card-text">
         <div class="card-top">
-          <h3>Urban Scooter · Web, Mobile &amp; API Testing | 05/2026</h3>
-          <span class="status">PASS</span>
+          <div class="project-meta">
+            <span>Test Automation</span>
+            <time datetime="2026-08">08/2026</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">SauceDemo · Checkout Automation</button></h3>
         </div>
         <p class="desc">
-          Tested order placement, order status, and courier workflows across the web app, Android app, and API.
+          Automated the shopping journey from login through checkout in SauceDemo.
         </p>
-        <p>
-             <img src="https://img.shields.io/badge/Postman-FF6C37?logo=postman&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Jira-0052CC?logo=jira&amp;logoColor=white" height="35" loading="lazy">
+        <p class="project-highlight"><span>Organized browser interactions in Page Objects and used pytest fixtures to set up login, cart, and checkout tests.</span></p>
+        <p class="card-tools">
+             <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Selenium-43B02A?logo=selenium&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&amp;logoColor=white" height="35" loading="lazy">
         </p>
-        <ul class="metrics">
-          <li>Executed 140 test cases covering courier creation, order management, and core user journeys 
-               using Android Studio Emulator and Postman.</li>
-          <li>Reported 31 defects in Jira. In courier mode, navigation to the “My Orders” tab failed (TS10-9).</li>
-        </ul>
+        <template class="project-details">
+          <ul class="metrics">
+            <li>Covered valid and locked-out users, product sorting, cart updates, and order completion.</li>
+          </ul>
+        </template>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/web-mobile-api-testing#-key-reports--findings" target="_blank">Test reports and findings →</a>
-          <a href="https://docs.google.com/spreadsheets/d/1YYfAs6b0Kmf2l7xMoadeh8jQ6riV6D3P/edit?usp=drive_link&amp;ouid=114584372796764343614&amp;rtpof=true&amp;sd=true" target="_blank">Documentation →</a>
+          <a href="https://github.com/JanRDLP/saucedemo-flows-automation" target="_blank">GitHub →</a>
         </div>
       </div>
+      </article>
+
+      <article class="card card-split" id="urban-scooter-testing" style="scroll-margin-top: 5rem" data-category="functional">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
@@ -836,32 +1297,35 @@ body:has(.modal[open]) { overflow: hidden; }
           </div>
         </div>
       </div>
-    </article>
-
-    <article class="card card-split">
       <div class="card-text">
         <div class="card-top">
-          <h3>End-to-End Automation - Urban Routes | 04/2026</h3>
-          <span class="status">PASS</span>
+          <div class="project-meta">
+            <span>Web, Mobile &amp; API Testing</span>
+            <time datetime="2026-05">05/2026</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">Urban Scooter</button></h3>
         </div>
         <p class="desc">
-          Automate the end-to-end taxi booking flow in Urban Routes.
+          Verified ordering and courier workflows across web, Android, and API.
         </p>
-        <p>
-             <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Selenium-43B02A?logo=selenium&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&amp;logoColor=white" height="35" loading="lazy">
+        <p class="project-highlight"><span>Reported 31 defects in Jira. In courier mode, navigation to the “My Orders” tab failed (TS10-9).</span></p>
+        <p class="card-tools">
+             <img src="https://img.shields.io/badge/Postman-FF6C37?logo=postman&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Jira-0052CC?logo=jira&amp;logoColor=white" height="35" loading="lazy">
         </p>
-        <ul class="metrics">
-          <li>Implemented a Page Object Model (POM) and automated tests using, covering route setup, tariff selection, 
-               phone verification, payment method addition, and order confirmation.</li>
-          <li>Reproducibility, defect detection, and scalability through GitHub version control.</li>
-          <li>Includes source code, test scripts, Page Object Model implementation, and reproducibility guidelines.</li>
-        </ul>
+        <template class="project-details">
+          <ul class="metrics">
+            <li>Executed 140 test cases covering courier creation, order management, and core user journeys using Android Studio Emulator and Postman.</li>
+          </ul>
+        </template>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/qa-project-Urban-Routes-es" target="_blank">GitHub →</a>
+          <a href="https://github.com/JanRDLP/web-mobile-api-testing#-key-reports--findings" target="_blank">Test reports and findings →</a>
+          <a href="https://docs.google.com/spreadsheets/d/1YYfAs6b0Kmf2l7xMoadeh8jQ6riV6D3P/edit?usp=drive_link&amp;ouid=114584372796764343614&amp;rtpof=true&amp;sd=true" target="_blank">Documentation →</a>
         </div>
       </div>
+      </article>
+
+<article class="card card-split" id="urban-routes-automation" data-category="automation">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
@@ -913,28 +1377,30 @@ body:has(.modal[open]) { overflow: hidden; }
           </div>
         </div>
       </div>
-    </article>
-
-    <article class="card card-split reverse">
       <div class="card-text">
         <div class="card-top">
-          <h3>Urban Routes · SQL and Log Validation | 03/2026</h3>
-          <span class="status">PASS</span>
+          <div class="project-meta">
+            <span>Test Automation</span>
+            <time datetime="2026-04">04/2026</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">Urban Routes · Booking Automation</button></h3>
         </div>
         <p class="desc">
-          Used SQL and application logs to check fleet availability and the weather conditions that trigger fare changes.
+          Automate the end-to-end taxi booking flow in Urban Routes.
         </p>
-        <p>
-             <img src="https://img.shields.io/badge/SQL-336791?logo=postgresql&amp;logoColor=white" height="35" loading="lazy">
+        <p class="project-highlight"><span>Used Page Objects to verify route setup, fare selection, phone verification, payment, and booking confirmation.</span></p>
+        <p class="card-tools">
+             <img src="https://img.shields.io/badge/Python-3776AB?logo=python&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Selenium-43B02A?logo=selenium&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&amp;logoColor=white" height="35" loading="lazy">
         </p>
-        <ul class="metrics">
-          <li>Ran SQL queries to analyze vehicle count, company distribution, weather conditions, and trip aggregations.</li>
-          <li>Found 5,529 registered vehicles against a target of 10,550 and identified weather intervals where the fare multiplier should be 2.</li>
-        </ul>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/database-logs-validation" target="_blank">GitHub →</a>
+          <a href="https://github.com/JanRDLP/qa-project-Urban-Routes-es" target="_blank">GitHub →</a>
         </div>
       </div>
+      </article>
+
+<article class="card card-split" id="urban-routes-data" data-category="data">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
@@ -981,28 +1447,33 @@ body:has(.modal[open]) { overflow: hidden; }
           </div>
         </div>
       </div>
-    </article>
-
-    <article class="card card-split">
       <div class="card-text">
         <div class="card-top">
-          <h3>AutoLISP · Tag Export and Layer Control | 10/2025</h3>
+          <div class="project-meta">
+            <span>Data Validation</span>
+            <time datetime="2026-03">03/2026</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">Urban Routes · SQL and Log Validation</button></h3>
         </div>
         <p class="desc">
-          AutoCAD routines for exporting component labels and managing layer visibility in piping drawings.
+          Validated fleet availability and weather-based fares with SQL and logs.
         </p>
-        <p>
-             <img src="https://img.shields.io/badge/AutoCAD-E51050?logo=autodesk&amp;logoColor=white" height="35" loading="lazy">
-             <img src="https://img.shields.io/badge/AutoLISP-Scripting-blue?logo=lisp&logoColor=white" height="35" loading="lazy">
+        <p class="project-highlight"><span>Found 5,529 registered vehicles against a target of 10,550 and identified weather intervals where the fare multiplier should be 2.</span></p>
+        <p class="card-tools">
+             <img src="https://img.shields.io/badge/SQL-336791?logo=postgresql&amp;logoColor=white" height="35" loading="lazy">
         </p>
-        <ul class="metrics">
-          <li>ExportarEtiquetas writes component labels and their attributes to a CSV inventory for documentation and material tracking.</li>
-          <li>LayerControl manages layer visibility from one dialog. A layer stays visible only when all of its applicable groups are enabled.</li>
-        </ul>
+        <template class="project-details">
+          <ul class="metrics">
+            <li>Ran SQL queries to analyze vehicle count, company distribution, weather conditions, and trip aggregations.</li>
+          </ul>
+        </template>
         <div class="card-links">
-          <a href="https://github.com/JanRDLP/autolisp-routines" target="_blank">GitHub →</a>
+          <a href="https://github.com/JanRDLP/database-logs-validation" target="_blank">GitHub →</a>
         </div>
       </div>
+      </article>
+
+<article class="card card-split" id="autolisp-tag-layer-control" data-category="cad">
       <div class="card-img">
         <div class="gallery">
           <div class="gallery-track">
@@ -1030,12 +1501,38 @@ body:has(.modal[open]) { overflow: hidden; }
           </div>
         </div>
       </div>
-    </article>
-    <!-- Para agregar más proyectos: copia un bloque <article class="card card-split reverse">...</article>
-         completo y alterna la clase "reverse" para que la imagen cambie de lado. -->
+      <div class="card-text">
+        <div class="card-top">
+          <div class="project-meta">
+            <span>CAD Automation</span>
+            <time datetime="2025-10">10/2025</time>
+          </div>
+          <h3><button type="button" class="project-title" aria-haspopup="dialog">AutoLISP · Tag Export and Layer Control</button></h3>
+        </div>
+        <p class="desc">
+          AutoCAD routines for exporting component labels and managing layer visibility in piping drawings.
+        </p>
+        <p class="project-highlight"><span>ExportarEtiquetas writes component labels and their attributes to a CSV inventory for documentation and material tracking.</span></p>
+        <p class="card-tools">
+             <img src="https://img.shields.io/badge/AutoCAD-E51050?logo=autodesk&amp;logoColor=white" height="35" loading="lazy">
+             <img src="https://img.shields.io/badge/AutoLISP-Scripting-blue?logo=lisp&logoColor=white" height="35" loading="lazy">
+        </p>
+        <template class="project-details">
+          <ul class="metrics">
+            <li>LayerControl manages layer visibility from one dialog. A layer stays visible only when all of its applicable groups are enabled.</li>
+          </ul>
+        </template>
+        <div class="card-links">
+          <a href="https://github.com/JanRDLP/autolisp-routines" target="_blank">GitHub →</a>
+        </div>
+      </div>
+      </article>
+    </div>
 
   </div>
 </section>
+
+
 
 <section id="contact">
   <div class="wrap">
@@ -1059,19 +1556,355 @@ body:has(.modal[open]) { overflow: hidden; }
   © 2026 Jan Rivera. Hosted on GitHub Pages.
 </footer>
 
-  <dialog id="imageModal" class="modal" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+  <template id="readme-piping-generation">
+    <h4>Piping Component Generation</h4>
+    <p><code>CREARPIEZA</code> is an AutoLISP command for configuring and placing 3D piping components in AutoCAD. The dialog previews the component label, block name, and layer before insertion.</p>
+    <h4>Run in AutoCAD</h4>
+    <ol>
+    <li>Download this folder and keep the five <code>.lsp</code> files together.</li>
+    <li>In AutoCAD for Windows, run <code>APPLOAD</code> and load <code>CrearPieza.lsp</code> from a trusted location.</li>
+    <li>Run <code>CREARPIEZA</code>. If prompted for a dependency, select <code>PiezaDatos.lsp</code> in the same folder. The command loads the remaining modules and generates its dialog at runtime.</li>
+    </ol>
+    <h4>Example</h4>
+    <ol>
+    <li>Select an elbow for weldable black pipe with Schedule 40, a 90° angle, a long radius, and a nominal size of 2 inches.</li>
+    <li>Select the labeled-solid-in-block output and review the generated label, block name, and destination layer.</li>
+    <li>Click <strong>Crear</strong> and pick the intersection of the elbow’s connection centerlines in the drawing.</li>
+    <li>Press Enter to place another elbow with the same settings, or choose <strong>Salir</strong>.</li>
+    </ol>
+    <p>The example creates simplified geometry without threads or bevels.</p>
+    <h4>Files</h4>
+    <ul>
+    <li><code>CrearPieza.lsp</code> provides the command and configuration dialog.</li>
+    <li><code>PiezaDatos.lsp</code> handles component labels and stored data.</li>
+    <li><code>GalvanizadosCifunsa.lsp</code>, <code>PiezasTuboNegro.lsp</code>, and <code>AccesoriosTuberia.lsp</code> provide the component catalogs and geometry used by the command.</li>
+    </ul>
+    <p><a href="https://github.com/JanRDLP/autolisp-routines/blob/main/piping-component-generation/README.md" target="_blank" rel="noopener">View README on GitHub ↗</a></p>
+  </template>
+
+  <template id="readme-nomadauto">
+    <h4>Nomad Pizza: Public Order Flow Automation</h4>
+    <p>UI automation for Nomad Pizza's public ordering journey. It uses <strong>Python, pytest, and Selenium</strong>, with the Page Object Model and parametrized test data to validate the menu, cart, and public order information.</p>
+    <p>This repository and the entire <code>public-order-flow/</code> folder are dedicated to the public customer interface. Its tests open the customer menu at the site root (<code>/</code>) and cover the menu, cart, and public order information. They must never open <code>/admin.html</code>; Admin interface automation is maintained separately and is not included here for confidentiality. The application source code, credentials, <code>.env</code> files, and Firestore cleanup integrations are also excluded.</p>
+    <h4>Scope</h4>
+    <ul>
+    <li><strong>Menu:</strong> product visibility and names, quantity counters, order type, prices, and the Pizza Dog promotion.</li>
+    <li><strong>Customizable pizzas:</strong> ingredient availability across selectors, ingredient combinations, and price calculations based on the selected ingredients.</li>
+    <li><strong>Cart:</strong> quantities, line subtotals and order total; confirmation when decreasing a quantity from one to zero; product details; remove and back actions; and bank details when bank transfer is selected.</li>
+    <li><strong>Public order information:</strong> order summary, order ID, customer, payment method, total, products, ticket/QR link, return-to-menu action, and bank transfer/WhatsApp details.</li>
+    </ul>
+    <p>Menu and cart tests stop before submitting an order. The two order information tests create a test order to reach the summary, so they are restricted to the local Firebase Hosting Emulator (port 5000). Orders remain in the Firestore Emulator and are not deleted automatically. The new-order notification test is not included because it belongs to the admin experience.</p>
+    <h4>Requirements</h4>
+    <ul>
+    <li>Python 3.10 or later.</li>
+    <li>Google Chrome.</li>
+    <li>An accessible URL for the public application. By default, the tests use Firebase Hosting Emulator at <code>http://127.0.0.1:5000/</code>.</li>
+    <li>For <code>test_info.py</code>, Firebase Auth and Firestore Emulator must also be running, in addition to Hosting Emulator.</li>
+    </ul>
+    <p>For the local end-to-end order tests, configure <code>NOMAD_PUBLIC_URL</code> as the customer-facing root URL:</p>
+    <pre><code>NOMAD_PUBLIC_URL=http://127.0.0.1:5000/</code></pre>
+    <p>Do not set it to <code>http://127.0.0.1:5000/admin.html</code> or use <code>NOMAD_ADMIN_URL</code> in this project. The public browser fixture and order-information tests reject non-root paths so a misconfigured run cannot silently test the Admin interface.</p>
+    <h4>Installation and usage</h4>
+    <p>From this project directory:</p>
+    <pre><code>python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt</code></pre>
+    <p>To run the tests against a different public URL, set this environment variable for the current terminal session:</p>
+    <pre><code>$env:NOMAD_PUBLIC_URL = &quot;https://your-public-site.example/&quot;</code></pre>
+    <p>Run the public menu and cart tests:</p>
+    <pre><code>python -m pytest tests/test_menu.py tests/test_cart.py -v</code></pre>
+    <p>The order information tests submit local test orders. Run them only while Firebase Emulators are running:</p>
+    <pre><code>python -m pytest tests/test_info.py -v</code></pre>
+    <p>Ingredient combinations are parametrized and may produce many test cases in a run.</p>
+    <h4>Test Results and Defect Reports</h4>
+    <p>The reports below document findings from earlier test executions. They are kept for traceability and do not necessarily represent current failures; rerun the related cases to confirm their status. The public reports include the observed behavior and test context without requiring access to Jira.</p>
+    <table><tr><th>Jira issue</th><th>Test case</th><th>Finding</th></tr><tr><td><a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation/blob/main/docs/defects/NP-1.md" target="_blank" rel="noopener">NP-1</a></td><td>NO-007</td><td>Pizza Dog takeout promotion and price synchronization</td></tr><tr><td><a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation/blob/main/docs/defects/NP-2.md" target="_blank" rel="noopener">NP-2</a></td><td>NO-014</td><td>Test data description differs from the menu/cart description</td></tr><tr><td><a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation/blob/main/docs/defects/NP-3.md" target="_blank" rel="noopener">NP-3</a></td><td>NO-014</td><td>Order-type label capitalization caused an exact-match assertion failure</td></tr></table>
+    <p>NO-014 is linked to both NP-2 and NP-3 because the reports describe separate observations from the same cart test case.</p>
+    <h4>Project structure</h4>
+    <p>The NO-001–NO-023 test case catalog and the public defect reports are documented in English in the files below.</p>
+    <pre><code>public-order-flow/
+├── conftest.py
+├── data.py
+├── casos_prueba_nomad_pizza.xlsx
+├── docs/
+│   └── defects/
+│       ├── NP-1.md
+│       ├── NP-2.md
+│       ├── NP-3.md
+│       └── README.md
+├── page_objects/
+│   ├── base_page.py
+│   ├── cart_page.py
+│   ├── menu_page.py
+│   ├── order_info_page.py
+│   └── __init__.py
+├── tests/
+│   ├── test_cart.py
+│   ├── test_info.py
+│   └── test_menu.py
+├── pytest.ini
+├── requirements.txt
+└── README.md</code></pre>
+    <p><a href="https://github.com/JanRDLP/nomad-pizza-order-flow-automation/blob/main/README.md" target="_blank" rel="noopener">View README on GitHub ↗</a></p>
+  </template>
+
+  <template id="readme-nomadpizza">
+    <h4>Nomad Pizza POS &amp; E-Ticket</h4>
+    <p>This web development project provides online ordering, digital tickets, and an admin dashboard for menus, orders, and sales.</p>
+    <p>The public portfolio documents live order tracking, custom pizza pricing, promotions, and Firestore-backed order IDs.</p>
+    <p><a href="https://drive.google.com/file/d/1QX4G09OtfYSDLiY9WLbwfD6BEffG75RC/view?usp=sharing" target="_blank" rel="noopener">Project documentation ↗</a></p>
+  </template>
+
+  <template id="readme-saucedemo">
+    <h4>🧪 SauceDemo Automation Framework</h4>
+    <p>This project implements an <strong>automated testing framework</strong></p>
+    <p>for the demo application <a href="https://www.saucedemo.com/" target="_blank" rel="noopener">SauceDemo</a></p>
+    <p>using <strong>Python, Selenium, and Pytest</strong>.</p>
+    <h4>📌 Key Features</h4>
+    <ul>
+    <li>Architecture based on <strong>Page Object Model (POM)</strong> for clean and reusable code.</li>
+    <li><strong>Pytest fixtures</strong> to initialize common states (login, cart, checkout).</li>
+    <li><strong>Test coverage</strong>:</li>
+    <li>Login (valid and locked-out users).</li>
+    <li>Navigation (sidebar, logout, external redirect, sorting).</li>
+    <li>Cart (add/remove from inventory and product details, continue shopping).</li>
+    <li>Checkout (full flow until order completion).</li>
+    <li><strong>Parametrization</strong> with <code>pytest.mark.parametrize</code> to validate multiple products </li>
+    <li>and sorting options.</li>
+    <li>Generic helpers (<code>wait_for</code>, <code>click_when_clickable</code>, <code>scroll</code>) to improve test </li>
+    <li>stability.</li>
+    </ul>
+    <h4>📂 Project Structure</h4>
+    <ul>
+    <li>├── data.py ---------------&gt; # Test data and constants</li>
+    <li>├── pages.py --------------&gt; # Page Object with locators and methods</li>
+    <li>├── conftest.py -----------&gt; # Pytest fixtures</li>
+    <li>├── test_login.py ---------&gt; # Login tests</li>
+    <li>├── test_navigation.py ----&gt; # Navigation and sidebar tests</li>
+    <li>├── test_cart.py ----------&gt; # Cart tests</li>
+    <li>└── test_checkout.py ------&gt; # Checkout tests</li>
+    </ul>
+    <h4>⚙️ Requirements</h4>
+    <ul>
+    <li>Python 3.10+</li>
+    <li>Google Chrome</li>
+    <li><a href="https://chromedriver.chromium.org/" target="_blank" rel="noopener">ChromeDriver</a> compatible with your Chrome version</li>
+    <li>Libraries:</li>
+    </ul>
+    <pre><code>  pip install selenium pytest
+
+## ▶️ Running Tests
+- pytest -v
+- pytest --html=report.html --self-contained-html
+
+## 👤 Test Data
+- Valid user: standard_user
+- Locked-out user: locked_out_user
+- Password: secret_sauce
+
+## 🚀 Example Test</code></pre>
+    <p>def test_valid_login(self, page):</p>
+    <p>page.login(&quot;standard_user&quot;, &quot;secret_sauce&quot;)</p>
+    <p>assert page.find(page.home_page).is_displayed()</p>
+    <pre><code>## 📈 Results
+All tests pass consistently thanks to:
+
+- Explicit waits (WebDriverWait)
+- Reusable methods in pages.py
+- Fixtures that reduce code duplication
+
+## Licence
+PyCharm
+</code></pre>
+    <p><a href="https://github.com/JanRDLP/saucedemo-flows-automation/blob/main/README.md" target="_blank" rel="noopener">View README on GitHub ↗</a></p>
+  </template>
+
+  <template id="readme-scooter">
+    <h4>Web, Mobile &amp; API Testing – Urban Scooter</h4>
+    <h4>📌 Project Overview</h4>
+    <p>This repository contains structured QA test reports for the <strong>Urban Scooter</strong> application, covering web, mobile, and API validation.</p>
+    <p>The goal was to ensure data integrity, functional compliance, and error handling across different modules: order placement, courier mode, order status, and API requests.</p>
+    <p>Findings highlight both approved cases and failed scenarios with traceable bug reports.</p>
+    <h4>📂 Repository Structure</h4>
+    <ul>
+    <li><strong>/reports</strong> → Original PDF reports with detailed test cases  </li>
+    <li><strong>/docs</strong> → Markdown summaries of test results  </li>
+    <li><strong>/api-tests</strong> → API request validation reports  </li>
+    <li><strong>/mobile-tests</strong> → Android Studio test cases for courier mode  </li>
+    <li><strong>/web-tests</strong> → Field validation and order status checklists  </li>
+    </ul>
+    <h4>📊 Key Reports &amp; Findings</h4>
+    <ul>
+    <li><strong>Order Screen Validation (Web)</strong>  </li>
+    </ul>
+    <p>Verified input fields for names, addresses, phone numbers, and comments.</p>
+    <p>Most cases passed, but some failed: e.g., surname length validation (<strong>TS10-1</strong>), invalid address handling (<strong>TS10-2</strong>), phone number length (<strong>TS10-3</strong>), and comment field restrictions (<strong>TS10-4, TS10-5</strong>).</p>
+    <ul>
+    <li><strong>Courier Mode (Mobile)</strong>  </li>
+    </ul>
+    <p>Android Studio tests validated push notifications, offline handling, and order acceptance.</p>
+    <p>Failures included alert notification (<strong>TS10-8</strong>) and navigation to &quot;My Orders&quot; tab (<strong>TS10-9</strong>). Offline scenarios were correctly handled.</p>
+    <ul>
+    <li><strong>Order Status Screen (Web)</strong>  </li>
+    </ul>
+    <p>Functional checklist confirmed correct state transitions (warehouse, courier on the way, delivery, completion).</p>
+    <p>Failures: access to status screen (<strong>TS10-6</strong>) and activation of the third state &quot;Order delivered&quot; (<strong>TS10-7</strong>).</p>
+    <ul>
+    <li><strong>API Requests Validation</strong>  </li>
+    </ul>
+    <p>Tested endpoints for courier creation, deletion, order tracking, and cancellation.</p>
+    <p>Failures included invalid login inputs (<strong>TS10-11–15</strong>), password validation (<strong>TS10-16–18</strong>), username validation (<strong>TS10-19–22</strong>), courier deletion errors (<strong>TS10-23–24</strong>), order count retrieval (<strong>TS10-25–27</strong>), and order cancellation conflicts (<strong>TS10-28–31</strong>).</p>
+    <h4>🎯 Value of the Project</h4>
+    <ul>
+    <li>Demonstrates <strong>end-to-end QA coverage</strong> across web, mobile, and API layers.  </li>
+    <li>Provides <strong>traceable bug reports</strong> linked to Atlassian for failed cases.  </li>
+    <li>Highlights <strong>data validation, functional compliance, and error handling</strong>.  </li>
+    <li>Serves as a portfolio example of <strong>systematic QA methodology</strong>.  </li>
+    <li>Integrate API validation into CI/CD pipelines for continuous monitoring.  </li>
+    </ul>
+    <p><a href="https://github.com/JanRDLP/web-mobile-api-testing/blob/main/README.md" target="_blank" rel="noopener">View README on GitHub ↗</a></p>
+  </template>
+
+  <template id="readme-routes">
+    <h4>Urban Routes - End-to-End Automation</h4>
+    <h4>Description</h4>
+    <p>This project contains automated tests for the Urban Routes web application, specifically focused on validating</p>
+    <p>the functionality of various actions available in the app. The tests cover positive scenarios to ensure that</p>
+    <p>each feature works as intended.</p>
+    <h4>Technologies and Techniques Used</h4>
+    <ul>
+    <li><strong>Python</strong> - Main programming language  </li>
+    <li><strong>pytest</strong> - Testing framework  </li>
+    <li><strong>Selenium WebDriver</strong>  </li>
+    <li><strong>End-to-End Automated Testing</strong>  </li>
+    <li><strong>UI Testing</strong> - User interface validation  </li>
+    <li><strong>Web Element Validation</strong>  </li>
+    <li><strong>Locators</strong> - ID, CLASS_NAME, CSS_SELECTOR, XPATH  </li>
+    <li><strong>WebDriverWait</strong> with Expected Conditions  </li>
+    <li><strong>Custom Explicit Waits</strong> using lambda functions  </li>
+    <li><strong>Presence and Visibility Checks for Elements</strong>  </li>
+    <li><strong>Page Object Model (POM)</strong>  </li>
+    <li><strong>Structured Test Cases</strong>  </li>
+    <li><strong>PyCharm</strong>  </li>
+    <li><strong>Git/GitHub</strong> - Version control  </li>
+    </ul>
+    <h4>Installation and Execution</h4>
+    <p>You need to have the following imports available in your environment:</p>
+    <ul>
+    <li>python</li>
+    <li>import data</li>
+    <li>import time</li>
+    <li>from selenium import webdriver</li>
+    <li>from selenium.webdriver import Keys</li>
+    <li>from selenium.webdriver.common.by import By</li>
+    <li>from selenium.webdriver.support import expected_conditions</li>
+    <li>from selenium.webdriver.support.wait import WebDriverWait</li>
+    </ul>
+    <p>The project is organized so that you will first find the locators, followed by the methods, and finally the</p>
+    <p>automated tests.</p>
+    <p>The only thing you need to do to run them is go to the test section, locate the test you want to execute,</p>
+    <p>and click <strong>Run</strong> on the left side of the <code>def</code> line.</p>
+    <h4>Licence</h4>
+    <p>PyCharm</p>
+    <p><a href="https://github.com/JanRDLP/qa-project-Urban-Routes-es/blob/main/README.md" target="_blank" rel="noopener">View README on GitHub ↗</a></p>
+  </template>
+
+  <template id="readme-database">
+    <h4>Database &amp; Logs Validation – Urban Routes</h4>
+    <h4>📌 Project Overview</h4>
+    <p>This project focuses on validating consistency between the Urban Routes taxi application logs and its database records.</p>
+    <p>The goal was to detect discrepancies in vehicle availability, demand compliance, weather-based pricing, and trip distribution.</p>
+    <p>Findings provide actionable insights for improving reliability, dynamic pricing, and user experience.</p>
+    <h4>📂 Repository Structure</h4>
+    <ul>
+    <li><strong>/reports</strong> → Original PDF reports with detailed analysis  </li>
+    <li><strong>/sql</strong> → SQL queries used for validation  </li>
+    <li><strong>/docs</strong> → Markdown summaries with results and metrics  </li>
+    </ul>
+    <h4>📊 Key Reports &amp; Findings</h4>
+    <ul>
+    <li><strong>Weather Conditions Validation</strong>  </li>
+    </ul>
+    <p>Hourly weather records (Nov 5–6, 2017) showed multiple *Bad* intervals (rain/storm at 01:00, 04:00, 05:00, 14:00, 16:00, 18:00–20:00).</p>
+    <p>These should trigger a fare coefficient = 2, helping detect bugs in dynamic pricing logic.</p>
+    <ul>
+    <li><strong>Vehicle Distribution by Company</strong>  </li>
+    </ul>
+    <p>Several companies operated with fewer than 100 cars: Nova Taxi (97), Patriot Taxi (89), Blue Diamond (85).</p>
+    <p>Some individual operators had only 1 vehicle, highlighting fragmented service and limited capacity.</p>
+    <ul>
+    <li><strong>Demand Compliance Check</strong>  </li>
+    </ul>
+    <p>Database registered <strong>5,529 vehicles</strong> vs <strong>10,550 planned</strong>, confirming a significant shortfall and explaining user complaints about availability.</p>
+    <ul>
+    <li><strong>Trips by Company (Nov 15–16, 2017)</strong>  </li>
+    </ul>
+    <p>Flash Cab led with <strong>19,558 trips</strong>, Taxi Affiliation Services with <strong>11,422</strong>, while smaller companies like Checker Taxi had only <strong>2,216</strong>.</p>
+    <p>This distribution validated revenue reports and exposed inconsistencies among operators.</p>
+    <h4>🎯 Value of the Project</h4>
+    <ul>
+    <li>Demonstrates <strong>QA applied to data validation</strong>.  </li>
+    <li>Provides <strong>evidence of business rule verification</strong> using SQL.  </li>
+    <li>Highlights <strong>bugs in pricing logic and insufficient fleet capacity</strong>.  </li>
+    <li>Serves as a portfolio example of <strong>data-driven quality assurance</strong>.  </li>
+    </ul>
+    <p><a href="https://github.com/JanRDLP/database-logs-validation/blob/main/README.md" target="_blank" rel="noopener">View README on GitHub ↗</a></p>
+  </template>
+
+  <template id="readme-lisp">
+    <h4>⚙️ AutoLISP Routines for AutoCAD</h4>
+    <p>This repository contains a collection of <strong>custom AutoLISP routines</strong> designed to automate</p>
+    <p>repetitive tasks in AutoCAD, focused on piping layouts and accessories.</p>
+    <h4>🔹 Main Routines</h4>
+    <ul>
+    <li><a href="https://github.com/JanRDLP/autolisp-routines/blob/main/docs/dn.md" target="_blank" rel="noopener">DN.lsp</a> → Custom command to draw pipes with diameter notation.</li>
+    <li><a href="https://github.com/JanRDLP/autolisp-routines/blob/main/docs/exportar_etiqueta.md" target="_blank" rel="noopener">ExportarEtiqueta.lsp</a> → Exports all labels to a structured file.</li>
+    <li><a href="https://github.com/JanRDLP/autolisp-routines/blob/main/docs/layer_control.md" target="_blank" rel="noopener">LayerControl.lsp</a> → Automates layer management for piping layouts.</li>
+    </ul>
+    <h4>📸 Examples</h4>
+    <p>Screenshots of AutoCAD showing the routines in action are included in the <code>docs and images</code> folder.</p>
+    <h4>▶️ How to Use</h4>
+    <ol>
+    <li>Open AutoCAD.</li>
+    <li>Load the routine with <code>APPLOAD</code>.</li>
+    <li>Run the custom command (e.g., <code>DN</code>).</li>
+    <li>Enjoy automated workflows!</li>
+    </ol>
+    <h4>⚙️ Compatibility</h4>
+    <ul>
+    <li>Works with <strong>AutoCAD 2014 or newer</strong> (requires trusted paths for secure loading).</li>
+    <li>Fully compatible with <strong>AutoCAD 2021+</strong> (Unicode support for labels and text).</li>
+    <li>Supported in <strong>AutoCAD LT 2024+</strong> (Windows only, with some limitations).</li>
+    <li>Visual Studio Core</li>
+    </ul>
+    <p><a href="https://github.com/JanRDLP/autolisp-routines/blob/main/README.md" target="_blank" rel="noopener">View README on GitHub ↗</a></p>
+  </template>
+
+  <dialog id="imageModal" class="modal" aria-labelledby="modalProject" aria-describedby="modalDescription">
     <div class="modal-header">
-      <h2 id="modalTitle">Screenshot</h2>
+      <h2 id="modalProject"></h2>
       <button type="button" class="modal-close" aria-label="Close image viewer" autofocus>&times;</button>
     </div>
-    <div class="modal-stage">
-      <img id="modalImage" alt="">
-    </div>
-    <p id="modalDescription"></p>
-    <div class="modal-footer">
-      <button type="button" class="modal-prev" aria-label="Previous screenshot">&#10094;</button>
-      <span id="modalPosition" aria-live="polite"></span>
-      <button type="button" class="modal-next" aria-label="Next screenshot">&#10095;</button>
+    <section class="modal-readme" aria-labelledby="modalReadmeHeading">
+      <h3 id="modalReadmeHeading">Project README</h3>
+      <div class="modal-readme-body" tabindex="0"></div>
+    </section>
+    <div class="modal-evidence">
+      <figure class="modal-figure">
+        <div class="modal-stage">
+          <img id="modalImage" alt="">
+        </div>
+        <figcaption class="modal-caption">
+          <h3 id="modalTitle">Screenshot</h3>
+          <p id="modalDescription"></p>
+        </figcaption>
+      </figure>
+      <div class="modal-footer">
+        <button type="button" class="modal-prev" aria-label="Previous screenshot">&#10094;</button>
+        <div class="modal-thumbnails" role="group" aria-label="Choose a screenshot"></div>
+        <span id="modalPosition" aria-live="polite"></span>
+        <button type="button" class="modal-next" aria-label="Next screenshot">&#10095;</button>
+      </div>
     </div>
   </dialog>
   
@@ -1084,32 +1917,124 @@ function slideGallery(btn, dir){
   let current = parseInt(track.dataset.index || 0);
   current = (current + dir + total) % total;
   track.dataset.index = current;
-  track.style.transform = `translateX(-${current * 100}%)`;
   dots.forEach((d,i) => d.classList.toggle('active', i === current));
   Array.from(track.children).forEach((image, index) => {
+    image.hidden = index !== current;
     image.tabIndex = index === current ? 0 : -1;
   });
 }
 document.addEventListener("DOMContentLoaded", () => {
+  const filters = document.querySelector(".project-filters");
+  const filterButtons = Array.from(filters.querySelectorAll("[data-filter]"));
+  const projects = Array.from(document.querySelectorAll("#projects [data-category]"));
+  const projectResults = document.querySelector(".project-results");
+
+  function filterProjects(category) {
+    let visible = 0;
+    for (const project of projects) {
+      project.hidden = category !== "all" && project.dataset.category !== category;
+      if (!project.hidden) visible++;
+    }
+    for (const button of filterButtons) {
+      button.setAttribute("aria-pressed", String(button.dataset.filter === category));
+    }
+    projectResults.textContent = `${visible} of ${projects.length} projects`;
+  }
+
+  for (const button of filterButtons) {
+    button.addEventListener("click", () => filterProjects(button.dataset.filter));
+  }
+  // Reveal a filtered project before the browser follows its anchor.
+  for (const project of projects.filter(project => project.id)) {
+    for (const link of document.querySelectorAll(`a[href="#${project.id}"]:not(.featured-project)`)) {
+      link.addEventListener("click", () => {
+        if (project.hidden) filterProjects("all");
+      });
+    }
+  }
+  filterProjects("all");
+  filters.hidden = false;
+  projectResults.hidden = false;
+
+  const featured = document.querySelector(".featured-projects");
+  const featuredSlides = Array.from(featured.querySelectorAll(".featured-project"));
+  const featuredPrev = featured.querySelector(".featured-prev");
+  const featuredNext = featured.querySelector(".featured-next");
+  const featuredDots = featured.querySelector(".featured-dots");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let featuredIndex = featuredSlides.findIndex(slide => !slide.hidden);
+  let manualNavigation = false;
+  let rotationTimer;
+
+  function showFeaturedProject(index) {
+    featuredSlides[featuredIndex].hidden = true;
+    featuredDots.children[featuredIndex].removeAttribute("aria-current");
+    featuredIndex = (index + featuredSlides.length) % featuredSlides.length;
+    featuredSlides[featuredIndex].hidden = false;
+    featuredDots.children[featuredIndex].setAttribute("aria-current", "true");
+  }
+
+  function updateRotation() {
+    window.clearInterval(rotationTimer);
+    if (manualNavigation || reducedMotion.matches) return;
+    rotationTimer = window.setInterval(() => {
+      if (!document.hidden && !modal.open && !featured.matches(":hover, :focus-within")) {
+        showFeaturedProject(featuredIndex + 1);
+      }
+    }, 6000);
+  }
+
+  function selectFeaturedProject(index) {
+    manualNavigation = true;
+    showFeaturedProject(index);
+    updateRotation();
+  }
+
   const modal = document.getElementById("imageModal");
+  const readmeHeading = document.getElementById("modalReadmeHeading");
+  const readmeBody = modal.querySelector(".modal-readme-body");
+  const projectName = document.getElementById("modalProject");
   const image = document.getElementById("modalImage");
   const title = document.getElementById("modalTitle");
   const description = document.getElementById("modalDescription");
   const position = document.getElementById("modalPosition");
   const previous = modal.querySelector(".modal-prev");
   const next = modal.querySelector(".modal-next");
+  const thumbnails = modal.querySelector(".modal-thumbnails");
 
   let gallery = [];
   let index = 0;
 
+  function isPortrait(screenshot) {
+    return screenshot.naturalHeight > screenshot.naturalWidth && screenshot.naturalWidth > 0;
+  }
+
+  image.addEventListener("load", () => image.classList.toggle("is-portrait", isPortrait(image)));
+  image.addEventListener("error", () => image.classList.remove("is-portrait"));
+
   function showImage() {
     const screenshot = gallery[index];
+    image.classList.toggle("is-portrait", isPortrait(screenshot));
     image.src = screenshot.src;
     image.alt = screenshot.alt;
     title.textContent = screenshot.alt || "Screenshot";
+    title.title = title.textContent;
     description.textContent = screenshot.dataset.description || "";
     description.hidden = !description.textContent;
     position.textContent = `${index + 1} / ${gallery.length}`;
+    for (const [thumbnailIndex, button] of Array.from(thumbnails.children).entries()) {
+      button.setAttribute("aria-current", String(index === thumbnailIndex));
+    }
+    const active = thumbnails.children[index];
+    if (active && modal.open) {
+      const bounds = thumbnails.getBoundingClientRect();
+      const thumbnailBounds = active.getBoundingClientRect();
+      if (thumbnailBounds.left < bounds.left) {
+        thumbnails.scrollLeft += thumbnailBounds.left - bounds.left;
+      } else if (thumbnailBounds.right > bounds.right) {
+        thumbnails.scrollLeft += thumbnailBounds.right - bounds.right;
+      }
+    }
   }
 
   function move(direction) {
@@ -1117,23 +2042,117 @@ document.addEventListener("DOMContentLoaded", () => {
     showImage();
   }
 
+  function openViewer(screenshot, trigger) {
+    const track = screenshot.closest(".gallery-track");
+    const project = track.closest(".card");
+    gallery = Array.from(track.querySelectorAll("img[data-gallery]"));
+    index = gallery.indexOf(screenshot);
+    projectName.textContent = project.querySelector("h3").textContent;
+    projectName.title = projectName.textContent;
+    const readme = document.getElementById(`readme-${screenshot.dataset.gallery}`);
+    readmeHeading.textContent = screenshot.dataset.gallery === "nomadpizza" ? "Project overview" : "Project README";
+    const details = document.createElement("div");
+    details.className = "modal-project-details";
+    const heading = document.createElement("h4");
+    heading.textContent = "Project details";
+    details.append(heading);
+    for (const source of project.querySelectorAll(".desc, .project-highlight")) {
+      const paragraph = source.cloneNode(true);
+      paragraph.removeAttribute("class");
+      details.append(paragraph);
+    }
+    const extra = project.querySelector("template.project-details");
+    if (extra) details.append(extra.content.cloneNode(true));
+    readmeBody.replaceChildren(details, readme.content.cloneNode(true));
+    readmeBody.scrollTop = 0;
+    previous.hidden = next.hidden = gallery.length < 2;
+    thumbnails.hidden = gallery.length < 2;
+    thumbnails.replaceChildren(...gallery.map((item, thumbnailIndex) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "modal-thumbnail";
+      button.setAttribute("aria-label", `Screenshot ${thumbnailIndex + 1}: ${item.alt}`);
+      const preview = document.createElement("img");
+      preview.src = item.src;
+      preview.alt = "";
+      button.append(preview);
+      button.addEventListener("click", () => {
+        index = thumbnailIndex;
+        showImage();
+      });
+      return button;
+    }));
+    trigger.focus({ preventScroll: true });
+    modal.showModal();
+    modal.scrollTop = 0;
+    thumbnails.scrollLeft = 0;
+    showImage();
+  }
+
+  featuredSlides.forEach((slide, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", slide.querySelector(".featured-title").textContent);
+    dot.addEventListener("click", () => selectFeaturedProject(index));
+    featuredDots.append(dot);
+
+  });
+  featuredSlides.forEach(link => {
+    const project = document.getElementById(link.hash.slice(1));
+    const screenshots = Array.from(project.querySelectorAll(".gallery-track img[data-gallery]"));
+    const cover = link.querySelector("img");
+    const screenshot = screenshots.find(image => image.src === cover?.src) || screenshots[0];
+    if (!screenshot) return;
+    link.setAttribute("aria-haspopup", "dialog");
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      openViewer(screenshot, link);
+    });
+  });
+  featuredPrev.addEventListener("click", () => selectFeaturedProject(featuredIndex - 1));
+  featuredNext.addEventListener("click", () => selectFeaturedProject(featuredIndex + 1));
+  featuredPrev.hidden = featuredNext.hidden = false;
+  showFeaturedProject(featuredIndex);
+  let fittedWidth = 0;
+  const titleSizer = new ResizeObserver(([entry]) => {
+    const width = entry.contentRect.width;
+    if (!width || width === fittedWidth) return;
+    fittedWidth = width;
+    for (const heading of featured.querySelectorAll(".featured-title")) {
+      heading.style.removeProperty("font-size");
+      if (heading.scrollWidth > heading.clientWidth) {
+        const fontSize = parseFloat(getComputedStyle(heading).fontSize);
+        const fittedSize = Math.floor(fontSize * (heading.clientWidth - 1) / heading.scrollWidth);
+        heading.style.fontSize = `${Math.max(10, fittedSize)}px`;
+      }
+    }
+  });
+  titleSizer.observe(featured.querySelector(".featured-slides"));
+  reducedMotion.addEventListener("change", updateRotation);
+  updateRotation();
+
+  for (const project of projects) {
+    const titleButton = project.querySelector(".project-title");
+    const track = project.querySelector(".gallery-track");
+    project.addEventListener("click", event => {
+      if (event.target.closest("a, .gallery-btn, .gallery-track img, .card-tools")) return;
+      const screenshot = track.children[Number(track.dataset.index || 0)];
+      openViewer(screenshot, titleButton);
+    });
+  }
+
   document.querySelectorAll(".gallery-track img[data-gallery]").forEach(screenshot => {
+    const setOrientation = () => screenshot.classList.toggle("is-portrait", isPortrait(screenshot));
+    screenshot.addEventListener("load", setOrientation);
+    if (screenshot.complete) setOrientation();
     screenshot.tabIndex = screenshot === screenshot.parentElement.firstElementChild ? 0 : -1;
     screenshot.setAttribute("role", "button");
     screenshot.setAttribute("aria-haspopup", "dialog");
-    function open() {
-      gallery = Array.from(screenshot.closest(".gallery-track").querySelectorAll("img[data-gallery]"));
-      index = gallery.indexOf(screenshot);
-      showImage();
-      screenshot.focus({ preventScroll: true });
-      modal.showModal();
-      modal.scrollTop = 0;
-    }
-    screenshot.addEventListener("click", open);
+    screenshot.addEventListener("click", () => openViewer(screenshot, screenshot));
     screenshot.addEventListener("keydown", event => {
       if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();
-      open();
+      openViewer(screenshot, screenshot);
     });
   });
 
@@ -1144,6 +2163,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target === modal) modal.close();
   });
   modal.addEventListener("keydown", event => {
+    if (readmeBody.contains(event.target)) return;
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
     event.preventDefault();
     move(event.key === "ArrowLeft" ? -1 : 1);
