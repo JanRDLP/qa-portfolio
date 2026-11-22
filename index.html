@@ -572,10 +572,11 @@ body:has(.modal[open]){overflow:hidden;}
 }
 .modal-readme{
   grid-area:readme;
+  min-width:0;
   min-height:0;
   padding:0;
   display:grid;
-  grid-template-rows:auto minmax(0, 1fr);
+  grid-template:auto minmax(0, 1fr) / minmax(0, 1fr);
   border-right:1px solid var(--line);
   background:#131922;
 }
@@ -586,6 +587,7 @@ body:has(.modal[open]){overflow:hidden;}
   font:600 .8rem var(--mono);
 }
 .modal-readme-body{
+  min-width:0;
   overflow:auto;
   padding:0 clamp(14px, 2.5vw, 28px) 20px;
   overscroll-behavior:contain;
@@ -712,12 +714,14 @@ body:has(.modal[open]){overflow:hidden;}
 }
 @media (max-width:720px){
   .modal[open]{
-    grid-template:"header" 58px "evidence" minmax(clamp(290px, 62dvh, 470px), max-content) "readme" auto / minmax(0, 1fr);
+    grid-template:"header" 58px "evidence" max-content "readme" minmax(0, 1fr) / minmax(0, 1fr);
   }
   .modal-header{position:sticky; top:0; z-index:1;}
-  .modal-evidence{grid-template-rows:minmax(0, 1fr) 56px;}
-  .modal-readme{grid-template-rows:auto auto; border-right:0; border-top:1px solid var(--line);}
-  .modal-readme-body{overflow:visible;}
+  .modal-evidence{grid-template-rows:auto auto;}
+  .modal-figure{grid-template-rows:clamp(72px, 23dvh, 220px) auto;}
+  .modal-readme{border-right:0; border-top:1px solid var(--line);}
+  .modal-readme-body pre{max-width:100%;}
+  .modal-readme-body table{table-layout:fixed;}
   .modal-footer{gap:5px;}
   .modal button.modal-thumbnail{width:54px; height:44px;}
 }
@@ -736,6 +740,26 @@ body:has(.modal[open]){overflow:hidden;}
   footer{
     text-align:center; padding: 30px 0;
     font-family: var(--mono); font-size: 12px; color: var(--muted);
+  }
+  @media (max-width:480px){
+    .wrap{padding-inline:16px;}
+    nav.wrap{padding:10px 16px; gap:6px;}
+    .navlinks{width:100%; justify-content:space-between; gap:4px 8px;}
+    .navlinks a{font-size:.75rem; display:inline-block; padding-block:5px;}
+    body > section[id]{padding-block:46px; scroll-margin-top:78px;}
+    .hero{padding-block:38px 36px;}
+    .hero h1{font-size:clamp(1.75rem, 8vw, 2.25rem); overflow-wrap:anywhere;}
+    .hero .lead{margin:14px 0 20px;}
+    .btnrow{gap:8px;}
+    .btn{padding-inline:12px; font-size:.78rem;}
+    .about-grid{grid-template-columns:minmax(0, 1fr); gap:20px;}
+    .contact-box{padding:22px 12px;}
+    .badges img, .card-tools img{max-width:100%; object-fit:contain;}
+    .modal-footer{grid-template-columns:44px minmax(0, 1fr) 44px;}
+    .modal-thumbnails{grid-area:1 / 1 / 2 / -1;}
+    .modal-prev{grid-area:2 / 1;}
+    #modalPosition{grid-area:2 / 2;}
+    .modal-next{grid-area:2 / 3;}
   }
 </style>
 </head>
